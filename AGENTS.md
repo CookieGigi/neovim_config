@@ -29,3 +29,8 @@
 ### Error Handling
 - Don't suppress errors silently; let Neovim report them
 - Use `pcall()` only when failure is expected and handled
+
+## Package Management
+- Never use Mason for package/tool installation
+- All external tools (formatters, linters, LSP servers) must be installed independently
+- Document required external dependencies in plugin config comments
