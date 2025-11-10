@@ -1,0 +1,19 @@
+{
+  "format": {
+    "enabled": true,
+    "formatOnSave": true,
+    "formatters": {
+      "lua": {
+        "command": "stylua",
+        "args": ["--stdin-filepath", "{filepath}", "-"],
+        "stdin": true
+      }
+    }
+  },
+  "rules": {
+    "indentSize": 2,
+    "indentStyle": "space",
+    "lineWidth": 120,
+    "quoteStyle": "double"
+  }
+}

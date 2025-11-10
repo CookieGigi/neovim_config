@@ -17,24 +17,31 @@ base/
 
 ## Installation
 
-1. **Backup your existing config** (if you have one):
+1. **Install required external tools**:
+   ```bash
+   # Stylua (Lua formatter)
+   cargo install stylua
+   # OR use your system package manager
+   ```
+
+2. **Backup your existing config** (if you have one):
    ```bash
    mv ~/.config/nvim ~/.config/nvim.backup
    ```
 
-2. **Symlink or copy this config**:
+3. **Symlink or copy this config**:
    ```bash
    ln -s ~/Project/neovim/base ~/.config/nvim
    # OR
    cp -r ~/Project/neovim/base ~/.config/nvim
    ```
 
-3. **Launch Neovim**:
+4. **Launch Neovim**:
    ```bash
    nvim
    ```
    
-   On first launch, lazy.nvim will automatically install itself.
+   On first launch, lazy.nvim will automatically install itself and plugins.
 
 ## Key Mappings
 
@@ -62,6 +69,9 @@ Leader key is `<Space>`.
 ### Editing
 - `<` / `>` in visual mode - Indent left/right (keeps selection)
 - `<Alt-j/k>` - Move line/selection up/down
+
+### Formatting
+- `<leader>fm` - Format file or selection (requires stylua installed)
 
 ## Adding Plugins
 
@@ -131,6 +141,13 @@ Essential keybindings for:
 - Window/split management
 - Buffer navigation
 - Visual mode editing
+
+### `.stylua.toml`
+Stylua configuration ensuring code is formatted with:
+- 2 spaces indentation
+- Double quotes preferred
+- 120 character line width
+- Consistent Lua formatting
 
 ## Next Steps
 

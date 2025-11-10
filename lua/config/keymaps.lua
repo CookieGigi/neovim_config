@@ -41,3 +41,6 @@ keymap.set("n", "<A-j>", ":m .+1<CR>==", { desc = "Move line down" })
 keymap.set("n", "<A-k>", ":m .-2<CR>==", { desc = "Move line up" })
 keymap.set("v", "<A-j>", ":m '>+1<CR>gv=gv", { desc = "Move selection down" })
 keymap.set("v", "<A-k>", ":m '<-2<CR>gv=gv", { desc = "Move selection up" })
+
+-- Formatting (configured in plugins/formatter.lua)
+-- <leader>fm - Format file or selection (requires stylua installed)
