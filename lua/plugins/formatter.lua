@@ -5,6 +5,20 @@
 return {
   "stevearc/conform.nvim",
   event = { "BufReadPre", "BufNewFile" },
+  keys = {
+    {
+      "<leader>fm",
+      function()
+        require("conform").format({
+          lsp_fallback = true,
+          async = false,
+          timeout_ms = 1000,
+        })
+      end,
+      mode = { "n", "v" },
+      desc = "Format file or selection",
+    },
+  },
   config = function()
     local conform = require("conform")
 
@@ -18,14 +32,5 @@ return {
         lsp_fallback = true,
       },
     })
-
-    -- Manual format keymap
-    vim.keymap.set({ "n", "v" }, "<leader>fm", function()
-      conform.format({
-        lsp_fallback = true,
-        async = false,
-        timeout_ms = 1000,
-      })
-    end, { desc = "Format file or selection" })
   end,
 }
