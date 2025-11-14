@@ -1,19 +1,24 @@
 {
-  "format": {
-    "enabled": true,
-    "formatOnSave": true,
-    "formatters": {
-      "lua": {
-        "command": "stylua",
-        "args": ["--stdin-filepath", "{filepath}", "-"],
-        "stdin": true
-      }
+  "$schema": "https://opencode.ai/config.json",
+  "formatter": {
+    "prettier": {
+      "command": ["prettier", "--write", "$FILE"],
+      "extensions": [
+        ".yml",
+        ".yaml",
+        ".md",
+        ".json",
+        ".js",
+        ".ts",
+        ".jsx",
+        ".tsx"
+      ]
+    },
+    "stylua": {
+            "command": ["stylua", "$FILE"],
+	    "extensione": ["lua"]
     }
-  },
-  "rules": {
-    "indentSize": 2,
-    "indentStyle": "space",
-    "lineWidth": 120,
-    "quoteStyle": "double"
   }
 }
+
+
