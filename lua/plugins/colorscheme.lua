@@ -5,7 +5,6 @@ return {
   opts = {
     flavors = "macchiato",
     integrations = {
-      which_key = true,
       treesitter = true,
     },
   },
