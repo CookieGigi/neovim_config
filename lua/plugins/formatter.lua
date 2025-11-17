@@ -25,6 +25,8 @@ return {
     conform.setup({
       formatters_by_ft = {
         lua = { "stylua" },
+        json = { "biome" },
+        jsonc = { "biome" },
       },
       format_on_save = {
         -- Enable format on save (set to false to disable)
