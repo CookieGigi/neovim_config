@@ -2,7 +2,8 @@
 -- Linter configuration using ALE (Asynchronous Lint Engine)
 -- Required external dependencies:
 -- - biome (install via npm install -g @biomejs/biome)
--- - vale (install via your package manager or https://vale.sh/docs/install/)
+-- - markdownlint-cli (install via npm install -g markdownlint-cli)
+-- - prettier (install via npm install -g prettier)
 
 return {
   "dense-analysis/ale",
@@ -12,13 +13,14 @@ return {
     vim.g.ale_linters = {
       json = { "biome" },
       jsonc = { "biome" },
-      markdown = { "vale" },
+      markdown = { "markdownlint" },
     }
 
     -- Fixers by filetype
     vim.g.ale_fixers = {
       json = { "biome" },
       jsonc = { "biome" },
+      markdown = { "markdownlint", "prettier" },
     }
 
     -- General settings

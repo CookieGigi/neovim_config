@@ -1,6 +1,8 @@
 ---@diagnostic disable: undefined-global
 -- Formatter configuration using conform.nvim
--- Required external dependency: stylua (install via cargo install stylua or system package manager)
+-- Required external dependencies:
+-- - stylua (install via cargo install stylua or system package manager)
+-- - prettier (install via npm install -g prettier)
 
 return {
   "stevearc/conform.nvim",
@@ -27,6 +29,7 @@ return {
         lua = { "stylua" },
         json = { "biome" },
         jsonc = { "biome" },
+        markdown = { "prettier" },
       },
       format_on_save = {
         -- Enable format on save (set to false to disable)
