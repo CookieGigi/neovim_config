@@ -19,13 +19,15 @@
 
 - 2 spaces for indentation (no tabs)
 - Use double quotes for strings
-- Add `---@diagnostic disable: undefined-global` at top of files to suppress vim global warnings
+- Add `---@diagnostic disable: undefined-global` at top of files to suppress
+  vim global warnings
 - Use descriptive variable names: `keymap` not `km`, `opts` not `o`
 - Comment sections with `-- Section Name` format
 
 ### Plugin Patterns
 
-- Always set `desc` for keymaps: `keymap.set("n", "<leader>ff", cmd, { desc = "Find files" })`
+- Always set `desc` for keymaps:
+  `keymap.set("n", "<leader>ff", cmd, { desc = "Find files" })`
 - Use `lazy = false` and `priority = 1000` for colorschemes
 - Group related settings with blank lines between sections
 - Load leader keys in `options.lua` BEFORE lazy.nvim setup

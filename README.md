@@ -4,7 +4,7 @@ A minimal Neovim configuration with lazy.nvim plugin manager.
 
 ## Structure
 
-```
+```text
 base/
 ├── init.lua                    # Entry point + lazy.nvim bootstrap
 ├── lua/
@@ -18,6 +18,7 @@ base/
 ## Installation
 
 1. **Install required external tools**:
+
    ```bash
    # Stylua (Lua formatter)
    cargo install stylua
@@ -25,11 +26,13 @@ base/
    ```
 
 2. **Backup your existing config** (if you have one):
+
    ```bash
    mv ~/.config/nvim ~/.config/nvim.backup
    ```
 
 3. **Symlink or copy this config**:
+
    ```bash
    ln -s ~/Project/neovim/base ~/.config/nvim
    # OR
@@ -37,10 +40,11 @@ base/
    ```
 
 4. **Launch Neovim**:
+
    ```bash
    nvim
    ```
-   
+
    On first launch, lazy.nvim will automatically install itself and plugins.
 
 ## Key Mappings
@@ -48,12 +52,14 @@ base/
 Leader key is `<Space>`.
 
 ### General
+
 - `<leader>w` - Save file
 - `<leader>q` - Quit
 - `<leader>x` - Save and quit
 - `<leader>nh` - Clear search highlights
 
 ### Window Management
+
 - `<leader>sv` - Split window vertically
 - `<leader>sh` - Split window horizontally
 - `<leader>se` - Make splits equal size
@@ -62,20 +68,24 @@ Leader key is `<Space>`.
 - `<C-Up/Down/Left/Right>` - Resize splits
 
 ### Buffer Navigation
+
 - `<Tab>` - Next buffer
 - `<Shift-Tab>` - Previous buffer
 - `<leader>bd` - Delete buffer
 
 ### Editing
+
 - `<` / `>` in visual mode - Indent left/right (keeps selection)
 - `<Alt-j/k>` - Move line/selection up/down
 
 ### Formatting
+
 - `<leader>fm` - Format file or selection (requires stylua installed)
 
 ## Adding Plugins
 
-To add plugins, create files in `lua/plugins/` directory. Each file should return a table with plugin specifications.
+To add plugins, create files in `lua/plugins/` directory. Each file should
+return a table with plugin specifications.
 
 ### Example: Adding a colorscheme
 
@@ -121,13 +131,17 @@ Then restart Neovim and lazy.nvim will install the plugins automatically!
 ## Configuration Files
 
 ### `init.lua`
+
 Entry point that:
+
 - Bootstraps lazy.nvim (auto-installs it)
 - Loads options and keymaps
 - Sets up plugin loading
 
 ### `lua/config/options.lua`
+
 Basic Vim options:
+
 - Line numbers (relative + absolute)
 - 2-space tabs with auto-indent
 - Smart case-insensitive search
@@ -136,14 +150,18 @@ Basic Vim options:
 - Proper split behavior
 
 ### `lua/config/keymaps.lua`
+
 Essential keybindings for:
+
 - File operations
 - Window/split management
 - Buffer navigation
 - Visual mode editing
 
 ### `.stylua.toml`
+
 Stylua configuration ensuring code is formatted with:
+
 - 2 spaces indentation
 - Double quotes preferred
 - 120 character line width
@@ -162,4 +180,5 @@ This is a bare-minimum config. Here are some popular plugins to consider:
 - **Git**: gitsigns.nvim, fugitive
 - **Status Line**: lualine.nvim
 
-Check [awesome-neovim](https://github.com/rockerBOO/awesome-neovim) for more plugins!
+Check [awesome-neovim](https://github.com/rockerBOO/awesome-neovim) for more
+plugins!
