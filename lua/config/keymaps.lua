@@ -42,5 +42,10 @@ keymap.set("n", "<A-k>", ":m .-2<CR>==", { desc = "Move line up" })
 keymap.set("v", "<A-j>", ":m '>+1<CR>gv=gv", { desc = "Move selection down" })
 keymap.set("v", "<A-k>", ":m '<-2<CR>gv=gv", { desc = "Move selection up" })
 
+-- System clipboard (requires xclip or xsel on Linux, pbcopy on macOS)
+keymap.set({"n", "v"}, "<leader>y", '"+y', { desc = "Copy to system clipboard" })
+keymap.set("n", "<leader>Y", '"+Y', { desc = "Copy line to system clipboard" })
+keymap.set({"n", "v"}, "<leader>p", '"+p', { desc = "Paste from system clipboard" })
+
 -- Formatting (configured in plugins/formatter.lua)
 -- <leader>fm - Format file or selection (requires stylua installed)
