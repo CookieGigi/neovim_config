@@ -43,6 +43,7 @@ return {
       "gitattributes",
       "gitcommit",
       "gitignore",
+      "ini",
       "json",
       "lua",
       "luadoc",
