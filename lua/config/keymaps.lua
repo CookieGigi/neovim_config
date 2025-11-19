@@ -2,9 +2,10 @@
 local keymap = vim.keymap
 
 -- General keymaps
-keymap.set("n", "<leader>w", ":w<CR>", { desc = "Save file" })
-keymap.set("n", "<leader>q", ":q<CR>", { desc = "Quit" })
-keymap.set("n", "<leader>x", ":x<CR>", { desc = "Save and quit" })
+keymap.set("n", "<C-s>", ":w<CR>", { desc = "Save file" })
+keymap.set("i", "<C-s>", "<Esc>:w<CR>a", { desc = "Save file in insert mode" })
+keymap.set("n", "<C-w>", ":q<CR>", { desc = "Quit" })
+keymap.set("n", "<C-x>", ":x<CR>", { desc = "Save and quit" })
 
 -- Clear search highlights
 keymap.set("n", "<leader>nh", ":nohl<CR>", { desc = "Clear search highlights" })
@@ -43,9 +44,9 @@ keymap.set("v", "<A-j>", ":m '>+1<CR>gv=gv", { desc = "Move selection down" })
 keymap.set("v", "<A-k>", ":m '<-2<CR>gv=gv", { desc = "Move selection up" })
 
 -- System clipboard (requires xclip or xsel on Linux, pbcopy on macOS)
-keymap.set({"n", "v"}, "<leader>y", '"+y', { desc = "Copy to system clipboard" })
+keymap.set({ "n", "v" }, "<leader>y", '"+y', { desc = "Copy to system clipboard" })
 keymap.set("n", "<leader>Y", '"+Y', { desc = "Copy line to system clipboard" })
-keymap.set({"n", "v"}, "<leader>p", '"+p', { desc = "Paste from system clipboard" })
+keymap.set({ "n", "v" }, "<leader>p", '"+p', { desc = "Paste from system clipboard" })
 
 -- Formatting (configured in plugins/formatter.lua)
 -- <leader>fm - Format file or selection (requires stylua installed)
