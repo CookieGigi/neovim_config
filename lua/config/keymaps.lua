@@ -13,11 +13,13 @@ keymap.set("n", "<C-a>", "ggVG", { desc = "Select all" })
 -- Clear search highlights
 keymap.set("n", "<leader>nh", ":nohl<CR>", { desc = "Clear search highlights" })
 
--- Window management
-keymap.set("n", "<leader>sv", "<C-w>v", { desc = "Split window vertically" })
-keymap.set("n", "<leader>sh", "<C-w>s", { desc = "Split window horizontally" })
-keymap.set("n", "<leader>se", "<C-w>=", { desc = "Make splits equal size" })
-keymap.set("n", "<leader>sx", "<cmd>close<CR>", { desc = "Close current split" })
+-- Window management (moved from <leader>s to <leader>w for clarity)
+keymap.set("n", "<leader>wv", "<C-w>v", { desc = "Split window vertically" })
+keymap.set("n", "<leader>wh", "<C-w>s", { desc = "Split window horizontally" })
+keymap.set("n", "<leader>we", "<C-w>=", { desc = "Make splits equal size" })
+keymap.set("n", "<leader>wx", "<cmd>close<CR>", { desc = "Close current split" })
+keymap.set("n", "<leader>wo", "<C-w>o", { desc = "Close other windows" })
+keymap.set("n", "<leader>ww", "<C-w>w", { desc = "Switch windows" })
 
 -- Navigate between splits
 keymap.set("n", "<C-h>", "<C-w>h", { desc = "Go to left split" })
@@ -85,4 +87,4 @@ keymap.set("n", "]L", ":llast<CR>", { desc = "Last location item" })
 keymap.set("n", "[L", ":lfirst<CR>", { desc = "First location item" })
 
 -- Formatting (configured in plugins/formatter.lua)
--- <leader>fm - Format file or selection (requires stylua installed)
+-- <leader>cf - Format file or selection (requires stylua installed)

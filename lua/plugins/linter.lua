@@ -30,8 +30,8 @@ return {
     vim.g.ale_lint_on_text_changed = "never"
   end,
   keys = {
-    { "<leader>lf", "<cmd>ALEFix<cr>", desc = "Fix with ALE" },
-    { "<leader>ln", "<cmd>ALENext<cr>", desc = "Next ALE diagnostic" },
-    { "<leader>lp", "<cmd>ALEPrevious<cr>", desc = "Previous ALE diagnostic" },
+    { "<leader>xf", "<cmd>ALEFix<cr>", desc = "Fix with ALE" },
+    { "<leader>xn", "<cmd>ALENext<cr>", desc = "Next ALE diagnostic" },
+    { "<leader>xp", "<cmd>ALEPrevious<cr>", desc = "Previous ALE diagnostic" },
   },
 }

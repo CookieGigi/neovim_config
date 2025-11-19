@@ -25,12 +25,11 @@ local function setup_lsp_keymaps(bufnr)
   local keymap = vim.keymap
   local opts = { buffer = bufnr, silent = true }
 
-  -- Navigation
-  keymap.set("n", "gd", vim.lsp.buf.definition, vim.tbl_extend("force", opts, { desc = "Go to definition" }))
-  keymap.set("n", "gD", vim.lsp.buf.declaration, vim.tbl_extend("force", opts, { desc = "Go to declaration" }))
-  keymap.set("n", "gi", vim.lsp.buf.implementation, vim.tbl_extend("force", opts, { desc = "Go to implementation" }))
-  keymap.set("n", "gt", vim.lsp.buf.type_definition, vim.tbl_extend("force", opts, { desc = "Go to type definition" }))
-  keymap.set("n", "gr", vim.lsp.buf.references, vim.tbl_extend("force", opts, { desc = "Show references" }))
+  -- Navigation (removed gd, gD, gr, gi, gt - using Snacks picker instead)
+  -- Keep these as fallbacks if Snacks is not loaded
+  -- keymap.set("n", "gd", vim.lsp.buf.definition, vim.tbl_extend("force", opts, { desc = "Go to definition" }))
+  -- keymap.set("n", "gD", vim.lsp.buf.declaration, vim.tbl_extend("force", opts, { desc = "Go to declaration" }))
+  -- keymap.set("n", "gr", vim.lsp.buf.references, vim.tbl_extend("force", opts, { desc = "Show references" }))
 
   -- Documentation
   keymap.set("n", "K", vim.lsp.buf.hover, vim.tbl_extend("force", opts, { desc = "Show hover documentation" }))
@@ -38,10 +37,10 @@ local function setup_lsp_keymaps(bufnr)
 
   -- Code actions
   keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, vim.tbl_extend("force", opts, { desc = "Code actions" }))
-  keymap.set("n", "<leader>rn", vim.lsp.buf.rename, vim.tbl_extend("force", opts, { desc = "Rename symbol" }))
+  keymap.set("n", "<leader>cr", vim.lsp.buf.rename, vim.tbl_extend("force", opts, { desc = "Rename symbol" }))
 
   -- Diagnostics
-  keymap.set("n", "<leader>d", vim.diagnostic.open_float, vim.tbl_extend("force", opts, { desc = "Show line diagnostics" }))
+  keymap.set("n", "<leader>dd", vim.diagnostic.open_float, vim.tbl_extend("force", opts, { desc = "Show line diagnostics" }))
   keymap.set("n", "[d", vim.diagnostic.goto_prev, vim.tbl_extend("force", opts, { desc = "Go to previous diagnostic" }))
   keymap.set("n", "]d", vim.diagnostic.goto_next, vim.tbl_extend("force", opts, { desc = "Go to next diagnostic" }))
   keymap.set("n", "<leader>dl", vim.diagnostic.setloclist, vim.tbl_extend("force", opts, { desc = "Show diagnostics in location list" }))
@@ -53,10 +52,7 @@ local function setup_lsp_keymaps(bufnr)
     print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
   end, vim.tbl_extend("force", opts, { desc = "List workspace folders" }))
 
-  -- Formatting
-  keymap.set("n", "<leader>lf", function()
-    vim.lsp.buf.format({ async = true })
-  end, vim.tbl_extend("force", opts, { desc = "Format buffer with LSP" }))
+  -- Formatting (removed - use conform.nvim at <leader>cf instead)
 end
 
 -- Attach keymaps on LSP attach
