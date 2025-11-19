@@ -2,12 +2,9 @@
 
 ## High Priority
 
-- [ ] Install formatter for json, markdown, ...
+- [ ] snacks
 
 ## Medium Priority
-
-- [ ] Install terminal with kitty graphics protocol support
-  (kitty/wezterm/ghostty)
 
 ## Low Priority
 
