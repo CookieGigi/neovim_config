@@ -23,12 +23,16 @@ return {
 
     -- Document existing key groups
     wk.add({
+      { "<leader>b", group = "Buffer" },
+      { "<leader>c", group = "Code" },
+      { "<leader>d", group = "Diagnostics" },
       { "<leader>f", group = "Find" },
       { "<leader>g", group = "Git" },
       { "<leader>l", group = "LSP" },
-      { "<leader>b", group = "Buffer" },
-      { "<leader>s", group = "Search" },
+      { "<leader>r", group = "Rename" },
+      { "<leader>s", group = "Search/Split" },
       { "<leader>t", group = "Toggle" },
+      { "<leader>w", group = "Workspace/Window" },
     })
   end,
 }
