@@ -33,6 +33,23 @@ keymap.set("n", "<Tab>", ":bnext<CR>", { desc = "Next buffer" })
 keymap.set("n", "<S-Tab>", ":bprevious<CR>", { desc = "Previous buffer" })
 keymap.set("n", "<leader>bd", ":bdelete<CR>", { desc = "Delete buffer" })
 
+-- Tab management
+keymap.set("n", "<leader>tn", ":tabnew | Explore<CR>", { desc = "New tab with explorer" })
+keymap.set("n", "<leader>tx", ":tabclose<CR>", { desc = "Close tab" })
+keymap.set("n", "<leader>to", ":tabonly<CR>", { desc = "Close other tabs" })
+keymap.set("n", "<leader>tl", ":tabnext<CR>", { desc = "Next tab" })
+keymap.set("n", "<leader>th", ":tabprevious<CR>", { desc = "Previous tab" })
+keymap.set("n", "<leader>tmh", ":-tabmove<CR>", { desc = "Move tab left" })
+keymap.set("n", "<leader>tml", ":+tabmove<CR>", { desc = "Move tab right" })
+
+-- Quick tab navigation (alternative)
+keymap.set("n", "<A-l>", ":tabnext<CR>", { desc = "Next tab" })
+keymap.set("n", "<A-h>", ":tabprevious<CR>", { desc = "Previous tab" })
+
+-- File explorer (netrw)
+keymap.set("n", "<leader>e", ":Explore<CR>", { desc = "Open file explorer" })
+keymap.set("n", "<leader>E", ":Sexplore<CR>", { desc = "Open explorer in split" })
+
 -- Better indenting
 keymap.set("v", "<", "<gv", { desc = "Indent left" })
 keymap.set("v", ">", ">gv", { desc = "Indent right" })

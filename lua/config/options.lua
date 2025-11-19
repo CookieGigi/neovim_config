@@ -45,3 +45,12 @@ vim.opt.timeoutlen = 300
 
 -- Scroll
 vim.opt.scrolloff = 8
+
+-- Tab line (always show tabs)
+vim.opt.showtabline = 2
+
+-- Netrw (file explorer) settings
+vim.g.netrw_banner = 0 -- Hide banner
+vim.g.netrw_liststyle = 3 -- Tree view
+vim.g.netrw_browse_split = 0 -- Open files in same window
+vim.g.netrw_winsize = 25 -- Window size percentage
