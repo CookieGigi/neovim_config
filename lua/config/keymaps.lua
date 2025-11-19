@@ -7,6 +7,9 @@ keymap.set("i", "<C-s>", "<Esc>:w<CR>a", { desc = "Save file in insert mode" })
 keymap.set("n", "<C-w>", ":q<CR>", { desc = "Quit" })
 keymap.set("n", "<C-x>", ":x<CR>", { desc = "Save and quit" })
 
+-- Select all
+keymap.set("n", "<C-a>", "ggVG", { desc = "Select all" })
+
 -- Clear search highlights
 keymap.set("n", "<leader>nh", ":nohl<CR>", { desc = "Clear search highlights" })
 
