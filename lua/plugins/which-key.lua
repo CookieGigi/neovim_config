@@ -30,12 +30,15 @@ return {
       { "<leader>E", desc = "Open explorer in split" },
       { "<leader>f", group = "Find" },
       { "<leader>g", group = "Git" },
-      { "<leader>l", group = "LSP" },
+      { "<leader>l", group = "LSP/Location" },
+      { "<leader>q", group = "Quickfix" },
       { "<leader>r", group = "Rename" },
       { "<leader>s", group = "Search/Split" },
       { "<leader>t", group = "Tabs/Toggle" },
       { "<leader>tm", group = "Tab Move" },
       { "<leader>w", group = "Workspace/Window" },
+      { "[", group = "Previous" },
+      { "]", group = "Next" },
     })
   end,
 }

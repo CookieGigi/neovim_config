@@ -68,5 +68,21 @@ keymap.set({ "n", "v" }, "<leader>y", '"+y', { desc = "Copy to system clipboard"
 keymap.set("n", "<leader>Y", '"+Y', { desc = "Copy line to system clipboard" })
 keymap.set({ "n", "v" }, "<leader>p", '"+p', { desc = "Paste from system clipboard" })
 
+-- Quickfix list navigation
+keymap.set("n", "<leader>qo", ":copen<CR>", { desc = "Open quickfix list" })
+keymap.set("n", "<leader>qc", ":cclose<CR>", { desc = "Close quickfix list" })
+keymap.set("n", "]q", ":cnext<CR>", { desc = "Next quickfix item" })
+keymap.set("n", "[q", ":cprev<CR>", { desc = "Previous quickfix item" })
+keymap.set("n", "]Q", ":clast<CR>", { desc = "Last quickfix item" })
+keymap.set("n", "[Q", ":cfirst<CR>", { desc = "First quickfix item" })
+
+-- Location list navigation
+keymap.set("n", "<leader>lo", ":lopen<CR>", { desc = "Open location list" })
+keymap.set("n", "<leader>lc", ":lclose<CR>", { desc = "Close location list" })
+keymap.set("n", "]l", ":lnext<CR>", { desc = "Next location item" })
+keymap.set("n", "[l", ":lprev<CR>", { desc = "Previous location item" })
+keymap.set("n", "]L", ":llast<CR>", { desc = "Last location item" })
+keymap.set("n", "[L", ":lfirst<CR>", { desc = "First location item" })
+
 -- Formatting (configured in plugins/formatter.lua)
 -- <leader>fm - Format file or selection (requires stylua installed)
