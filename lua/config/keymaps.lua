@@ -6,7 +6,7 @@ local keymap = has_snacks and snacks.keymap or vim.keymap
 -- General keymaps
 keymap.set("n", "<C-s>", ":w<CR>", { desc = "Save file" })
 keymap.set("i", "<C-s>", "<Esc>:w<CR>a", { desc = "Save file in insert mode" })
-keymap.set("n", "<C-w>", ":q<CR>", { desc = "Quit" })
+keymap.set("n", "<C-w>", ":qa<CR>", { desc = "Quit all" })
 keymap.set("n", "<C-x>", ":x<CR>", { desc = "Save and quit" })
 
 -- Select all
