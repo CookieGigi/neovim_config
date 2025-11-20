@@ -151,6 +151,7 @@ return {
       refresh = 50,
     },
     quickfile = { enabled = true },
+    rename = { enabled = true },
     scope = { enabled = true },
     scroll = { enabled = true },
     statuscolumn = { enabled = true },
