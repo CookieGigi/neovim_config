@@ -76,6 +76,31 @@ return {
     indent = { enabled = true },
     input = { enabled = true },
     keymap = { enabled = true },
+    lazygit = {
+      configure = true,
+      config = {
+        os = { editPreset = "nvim-remote" },
+        gui = {
+          nerdFontsVersion = "3",
+        },
+      },
+      theme_path = vim.fs.normalize(vim.fn.stdpath("cache") .. "/lazygit-theme.yml"),
+      theme = {
+        [241] = { fg = "Special" },
+        activeBorderColor = { fg = "MatchParen", bold = true },
+        cherryPickedCommitBgColor = { fg = "Identifier" },
+        cherryPickedCommitFgColor = { fg = "Function" },
+        defaultFgColor = { fg = "Normal" },
+        inactiveBorderColor = { fg = "FloatBorder" },
+        optionsTextColor = { fg = "Function" },
+        searchingActiveBorderColor = { fg = "MatchParen", bold = true },
+        selectedLineBgColor = { bg = "Visual" },
+        unstagedChangesColor = { fg = "DiagnosticError" },
+      },
+      win = {
+        style = "lazygit",
+      },
+    },
     picker = {
       enabled = true,
       -- Default confirm action opens in tab
@@ -195,6 +220,27 @@ return {
         require("snacks").git.blame_line()
       end,
       desc = "Git Blame Line",
+    },
+    {
+      "<leader>gg",
+      function()
+        require("snacks").lazygit.open()
+      end,
+      desc = "Lazygit",
+    },
+    {
+      "<leader>gL",
+      function()
+        require("snacks").lazygit.log()
+      end,
+      desc = "Lazygit Log",
+    },
+    {
+      "<leader>gF",
+      function()
+        require("snacks").lazygit.log_file()
+      end,
+      desc = "Lazygit Log File",
     },
     {
       "<leader>gc",
