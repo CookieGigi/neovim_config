@@ -1,5 +1,7 @@
 ---@diagnostic disable: undefined-global
-local keymap = vim.keymap
+-- Check if Snacks is loaded, fallback to vim.keymap if not
+local has_snacks, snacks = pcall(require, "snacks")
+local keymap = has_snacks and snacks.keymap or vim.keymap
 
 -- General keymaps
 keymap.set("n", "<C-s>", ":w<CR>", { desc = "Save file" })
@@ -33,9 +35,7 @@ keymap.set("n", "<C-Down>", ":resize -2<CR>", { desc = "Decrease split height" }
 keymap.set("n", "<C-Left>", ":vertical resize -2<CR>", { desc = "Decrease split width" })
 keymap.set("n", "<C-Right>", ":vertical resize +2<CR>", { desc = "Increase split width" })
 
--- Buffer navigation
-keymap.set("n", "<Tab>", ":bnext<CR>", { desc = "Next buffer" })
-keymap.set("n", "<S-Tab>", ":bprevious<CR>", { desc = "Previous buffer" })
+-- Buffer management (prefer tabs - use <Tab>/<S-Tab> for navigation)
 keymap.set("n", "<leader>bd", ":bdelete<CR>", { desc = "Delete buffer" })
 
 -- Tab management
@@ -48,12 +48,12 @@ keymap.set("n", "<leader>tmh", ":-tabmove<CR>", { desc = "Move tab left" })
 keymap.set("n", "<leader>tml", ":+tabmove<CR>", { desc = "Move tab right" })
 
 -- Quick tab navigation (alternative)
-keymap.set("n", "<A-l>", ":tabnext<CR>", { desc = "Next tab" })
-keymap.set("n", "<A-h>", ":tabprevious<CR>", { desc = "Previous tab" })
+keymap.set("n", "<Tab>", ":tabnext<CR>", { desc = "Next tab" })
+keymap.set("n", "<S-Tab>", ":tabprevious<CR>", { desc = "Previous tab" })
 
 -- File explorer (netrw)
-keymap.set("n", "<leader>e", ":Explore<CR>", { desc = "Open file explorer" })
-keymap.set("n", "<leader>E", ":Sexplore<CR>", { desc = "Open explorer in split" })
+keymap.set("n", "<leader>e", ":Texplore<CR>", { desc = "Open file explorer in new tab" })
+keymap.set("n", "<leader>E", ":Explore<CR>", { desc = "Open file explorer in current window" })
 
 -- Better indenting
 keymap.set("v", "<", "<gv", { desc = "Indent left" })
@@ -85,6 +85,126 @@ keymap.set("n", "]l", ":lnext<CR>", { desc = "Next location item" })
 keymap.set("n", "[l", ":lprev<CR>", { desc = "Previous location item" })
 keymap.set("n", "]L", ":llast<CR>", { desc = "Last location item" })
 keymap.set("n", "[L", ":lfirst<CR>", { desc = "First location item" })
+
+-- Diagnostics (not LSP-specific, always available)
+keymap.set("n", "<leader>dd", vim.diagnostic.open_float, { desc = "Show line diagnostics" })
+keymap.set("n", "[d", function()
+  vim.diagnostic.jump({ count = -1 })
+end, { desc = "Go to previous diagnostic" })
+keymap.set("n", "]d", function()
+  vim.diagnostic.jump({ count = 1 })
+end, { desc = "Go to next diagnostic" })
+keymap.set("n", "<leader>dl", vim.diagnostic.setloclist, { desc = "Show diagnostics in location list" })
+
+-- LSP-aware keymaps (automatically set when LSP attaches)
+-- Documentation
+keymap.set("n", "K", vim.lsp.buf.hover, {
+  lsp = { method = "textDocument/hover" },
+  desc = "Show hover documentation",
+})
+keymap.set("n", "<leader>k", vim.lsp.buf.signature_help, {
+  lsp = { method = "textDocument/signatureHelp" },
+  desc = "Show signature help",
+})
+
+-- Code actions
+keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, {
+  lsp = { method = "textDocument/codeAction" },
+  desc = "Code actions",
+})
+keymap.set("n", "<leader>cr", vim.lsp.buf.rename, {
+  lsp = { method = "textDocument/rename" },
+  desc = "Rename symbol",
+})
+
+-- Workspace management
+keymap.set("n", "<leader>wa", vim.lsp.buf.add_workspace_folder, {
+  lsp = {},
+  desc = "Add workspace folder",
+})
+keymap.set("n", "<leader>wr", vim.lsp.buf.remove_workspace_folder, {
+  lsp = {},
+  desc = "Remove workspace folder",
+})
+keymap.set("n", "<leader>wl", function()
+  print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+end, {
+  lsp = {},
+  desc = "List workspace folders",
+})
+
+-- Filetype-specific keymaps
+-- Lua files
+keymap.set("n", "<localleader>r", function()
+  vim.cmd.source()
+end, {
+  ft = "lua",
+  desc = "Run Lua File",
+})
+keymap.set("n", "<localleader>t", function()
+  local line = vim.api.nvim_get_current_line()
+  local chunk, err = load("return " .. line)
+  if chunk then
+    local result = chunk()
+    print(vim.inspect(result))
+  else
+    vim.notify("Error loading line: " .. err, vim.log.levels.ERROR)
+  end
+end, {
+  ft = "lua",
+  desc = "Run Lua Line",
+})
+keymap.set("v", "<localleader>t", function()
+  local start_pos = vim.fn.getpos("'<")
+  local end_pos = vim.fn.getpos("'>")
+  local lines = vim.api.nvim_buf_get_lines(0, start_pos[2] - 1, end_pos[2], false)
+  local code = table.concat(lines, "\n")
+  local chunk, err = load(code)
+  if chunk then
+    local result = chunk()
+    if result then
+      print(vim.inspect(result))
+    end
+  else
+    vim.notify("Error loading code: " .. err, vim.log.levels.ERROR)
+  end
+end, {
+  ft = "lua",
+  desc = "Run Lua Selection",
+})
+
+-- Help files
+keymap.set("n", "q", ":q<CR>", {
+  ft = "help",
+  desc = "Quit help window",
+})
+
+-- Quickfix/Location list
+keymap.set("n", "q", ":q<CR>", {
+  ft = { "qf" },
+  desc = "Quit quickfix/location list",
+})
+
+-- Markdown files
+keymap.set("n", "<localleader>p", function()
+  -- Preview markdown with glow in a new tab
+  local file = vim.fn.expand("%:p")
+  vim.cmd("tabnew")
+  vim.cmd("terminal glow " .. vim.fn.shellescape(file))
+  vim.cmd("startinsert")
+end, {
+  ft = "markdown",
+  desc = "Preview Markdown (glow)",
+})
+
+keymap.set("n", "<localleader>P", function()
+  -- Preview markdown with glow in pager mode (fullscreen terminal)
+  local file = vim.fn.expand("%:p")
+  vim.cmd("terminal glow --pager " .. vim.fn.shellescape(file))
+end, {
+  ft = "markdown",
+  desc = "Preview Markdown (glow pager)",
+})
 
 -- Formatting (configured in plugins/formatter.lua)
 -- <leader>cf - Format file or selection (requires stylua installed)

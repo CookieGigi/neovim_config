@@ -75,7 +75,30 @@ return {
     gitbrowse = { enabled = true },
     indent = { enabled = true },
     input = { enabled = true },
-    picker = { enabled = true },
+    keymap = { enabled = true },
+    picker = {
+      enabled = true,
+      -- Default confirm action opens in tab
+      confirm = "tab",
+      win = {
+        input = {
+          keys = {
+            -- <CR> opens in new tab (default)
+            ["<cr>"] = { "tab", mode = { "n", "i" } },
+            -- <C-e> opens in current buffer (override)
+            ["<c-e>"] = { "confirm", mode = { "n", "i" } },
+          },
+        },
+        list = {
+          keys = {
+            -- <CR> opens in new tab (default)
+            ["<cr>"] = "tab",
+            -- <C-e> opens in current buffer (override)
+            ["<c-e>"] = "confirm",
+          },
+        },
+      },
+    },
     notifier = { enabled = true },
     quickfile = { enabled = true },
     scope = { enabled = true },

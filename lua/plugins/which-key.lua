@@ -30,8 +30,8 @@ return {
       { "<leader>:", desc = "Command history" },
 
       -- File Operations
-      { "<leader>e", desc = "Open file explorer" },
-      { "<leader>E", desc = "Open explorer in split" },
+      { "<leader>e", desc = "Open file explorer in new tab" },
+      { "<leader>E", desc = "Open file explorer in current window" },
 
       -- Buffer Management
       { "<leader>b", group = "Buffer" },
