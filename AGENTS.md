@@ -46,6 +46,7 @@ Keep keymaps organized by functional groups with consistent prefixes:
 - **UI/Toggle**: `<leader>u*` (for UI-related toggles)
 
 Guidelines:
+
 - Always group related keymaps under a consistent prefix
 - Add comment headers before each keymap group: `-- Group Name`
 - Sort keymaps logically within groups (basic -> advanced)
