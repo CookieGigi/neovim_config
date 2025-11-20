@@ -105,6 +105,19 @@ return {
       enabled = true,
       -- Default confirm action opens in tab
       confirm = "tab",
+      -- Frecency tracking with SQLite3
+      frecency = {
+        enabled = true,
+        backend = "sqlite",
+        db_path = vim.fn.stdpath("data") .. "/snacks/frecency.db",
+      },
+      -- History tracking with SQLite3
+      history = {
+        enabled = true,
+        backend = "sqlite",
+        db_path = vim.fn.stdpath("data") .. "/snacks/history.db",
+        max_items = 1000,
+      },
       win = {
         input = {
           keys = {
