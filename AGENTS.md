@@ -42,3 +42,26 @@
 - Never use Mason for package/tool installation
 - All external tools (formatters, linters, LSP servers) must be installed independently
 - Document required external dependencies in plugin config comments
+
+## Commit Conventions
+
+Follow conventional commit format: `<type>: <description>`
+
+### Types
+
+- `feat`: New feature or functionality
+- `fix`: Bug fix
+- `chore`: Routine tasks, maintenance (dependencies, configs)
+- `refactor`: Code restructuring without behavior change
+- `docs`: Documentation only changes
+- `style`: Code style/formatting (whitespace, semicolons)
+- `test`: Adding or updating tests
+- `perf`: Performance improvements
+
+### Examples
+
+- `feat: add telescope fuzzy finder`
+- `fix: resolve treesitter highlighting issue`
+- `chore: update lazy-lock.json`
+- `refactor: reorganize plugin configurations`
+- `docs: update installation instructions`
