@@ -154,6 +154,15 @@ return {
     rename = { enabled = true },
     scope = { enabled = true },
     scroll = { enabled = true },
+    scratch = {
+      enabled = true,
+      win = {
+        wo = {
+          foldenable = false,
+          foldmethod = "manual",
+        },
+      },
+    },
     statuscolumn = { enabled = true },
     words = { enabled = true },
   },
@@ -522,6 +531,160 @@ return {
         require("snacks").notifier.show_history()
       end,
       desc = "Notification History",
+    },
+
+    -- Scratch Buffers
+    {
+      "<leader>vt",
+      function()
+        require("snacks").scratch({
+          name = "TODO",
+          ft = "markdown",
+          template = "# TODO\n\n## High Priority\n\n- [ ] \n\n## Medium Priority\n\n## Low Priority\n\n",
+          filekey = { id = "todo", cwd = false, branch = false, count = false },
+        })
+      end,
+      desc = "TODO Scratch Buffer",
+    },
+    {
+      "<leader>vn",
+      function()
+        require("snacks").scratch({
+          name = "Notes",
+          ft = "markdown",
+          template = "# Notes - " .. os.date("%Y-%m-%d") .. "\n\n",
+          filekey = { id = "notes", cwd = false, branch = false, count = false },
+        })
+      end,
+      desc = "Notes Scratch Buffer",
+    },
+    {
+      "<leader>vs",
+      function()
+        require("snacks").scratch({
+          name = "Snippets",
+          ft = function()
+            return vim.bo.filetype ~= "" and vim.bo.filetype or "text"
+          end,
+          filekey = { id = "snippets", cwd = false, branch = false, count = false },
+        })
+      end,
+      desc = "Snippets Scratch Buffer",
+    },
+    {
+      "<leader>vq",
+      function()
+        require("snacks").scratch({
+          name = "SQL",
+          ft = "sql",
+          template = "-- SQL Scratch\n\nSELECT \nFROM \nWHERE \n",
+          filekey = { id = "sql", cwd = false, branch = false, count = false },
+        })
+      end,
+      desc = "SQL Scratch Buffer",
+    },
+    {
+      "<leader>vc",
+      function()
+        require("snacks").scratch({
+          name = "Calc",
+          ft = "lua",
+          template = "-- Quick calculations (press <CR> to execute)\nreturn ",
+          filekey = { id = "calc", cwd = false, branch = false, count = false },
+        })
+      end,
+      desc = "Calculation Scratch Buffer",
+    },
+    {
+      "<leader>vj",
+      function()
+        require("snacks").scratch({
+          name = "Journal",
+          ft = "markdown",
+          template = "# Dev Journal - "
+            .. os.date("%Y-%m-%d %A")
+            .. "\n\n## What I worked on\n\n## Problems solved\n\n## Questions/TODO\n\n",
+          filekey = {
+            id = "journal-" .. os.date("%Y-%m-%d"),
+            cwd = false,
+            branch = false,
+            count = false,
+          },
+        })
+      end,
+      desc = "Daily Journal Scratch Buffer",
+    },
+    {
+      "<leader>vr",
+      function()
+        require("snacks").scratch({
+          name = "Regex",
+          ft = "lua",
+          template = '-- Regex Tester (press <CR> to execute)\nlocal pattern = ""\nlocal text = ""\nreturn text:match(pattern)\n',
+          filekey = { id = "regex", cwd = false, branch = false, count = false },
+        })
+      end,
+      desc = "Regex Tester Scratch Buffer",
+    },
+    {
+      "<leader>vf",
+      function()
+        local win = require("snacks").scratch({
+          name = "JSON",
+          ft = "json",
+          template = "{}",
+          filekey = { id = "json", cwd = false, branch = false, count = false },
+          win = {
+            keys = {
+              ["format"] = {
+                "<leader>j",
+                function(self)
+                  -- Get all buffer content
+                  local lines = vim.api.nvim_buf_get_lines(self.buf, 0, -1, false)
+                  local content = table.concat(lines, "\n")
+
+                  -- Try to parse and format JSON
+                  local ok, decoded = pcall(vim.json.decode, content)
+                  if ok then
+                    local formatted = vim.fn.json_encode(decoded)
+                    -- Pretty print with jq if available, otherwise use vim's indent
+                    local jq_result = vim.fn.system("jq .", formatted)
+                    if vim.v.shell_error == 0 then
+                      local new_lines = vim.split(jq_result, "\n")
+                      vim.api.nvim_buf_set_lines(self.buf, 0, -1, false, new_lines)
+                    else
+                      -- Fallback: use vim's json formatting
+                      local new_lines = vim.split(formatted, "\n")
+                      vim.api.nvim_buf_set_lines(self.buf, 0, -1, false, new_lines)
+                      vim.cmd("normal! gg=G")
+                    end
+                    vim.notify("JSON formatted successfully", vim.log.levels.INFO)
+                  else
+                    vim.notify("Invalid JSON: " .. tostring(decoded), vim.log.levels.ERROR)
+                  end
+                end,
+                desc = "Format JSON",
+                mode = "n",
+              },
+            },
+          },
+        })
+      end,
+      desc = "JSON Formatter Scratch Buffer",
+    },
+    {
+      "<leader>v.",
+      function()
+        require("snacks").scratch()
+      end,
+      desc = "Toggle Scratch Buffer",
+    },
+    {
+      "<leader>vv",
+      function()
+        require("snacks").scratch.select()
+      end,
+      desc = "Select Scratch Buffer",
     },
   },
   config = function(_, opts)

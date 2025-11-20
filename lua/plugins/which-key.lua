@@ -69,6 +69,9 @@ return {
       { "<leader>t", group = "Tabs" },
       { "<leader>tm", group = "Tab Move" },
 
+      -- Scratch Buffers
+      { "<leader>v", group = "Scratch Buffers" },
+
       -- Window/Split Management & Workspace
       { "<leader>w", group = "Window/Workspace" },
 
