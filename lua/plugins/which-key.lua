@@ -86,6 +86,10 @@ return {
       { "[", group = "Previous" },
       { "]", group = "Next" },
       { "g", group = "Goto" },
+
+      -- Comment Operations
+      { "gc", group = "Comment" },
+      { "gb", group = "Block Comment" },
     })
   end,
 }
