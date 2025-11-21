@@ -209,6 +209,14 @@ end, {
 -- Formatting (configured in plugins/formatter.lua)
 -- <leader>cf - Format file or selection (requires stylua installed)
 
+-- Testing (configured in plugins/neotest.lua)
+-- <leader>tt - Run nearest test
+-- <leader>tf - Run current file
+-- <leader>ta - Run all tests
+-- <leader>td - Debug nearest test
+-- <leader>tS - Toggle test summary
+-- See plugins/neotest.lua for all test keymaps
+
 -- Netrw rename integration with Snacks LSP rename
 vim.api.nvim_create_autocmd({ "FileType" }, {
   pattern = { "netrw" },
