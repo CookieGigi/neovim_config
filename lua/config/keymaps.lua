@@ -87,14 +87,14 @@ keymap.set("n", "]L", ":llast<CR>", { desc = "Last location item" })
 keymap.set("n", "[L", ":lfirst<CR>", { desc = "First location item" })
 
 -- Diagnostics (not LSP-specific, always available)
-keymap.set("n", "<leader>dd", vim.diagnostic.open_float, { desc = "Show line diagnostics" })
+keymap.set("n", "<leader>xx", vim.diagnostic.open_float, { desc = "Show line diagnostics" })
 keymap.set("n", "[d", function()
   vim.diagnostic.jump({ count = -1 })
 end, { desc = "Go to previous diagnostic" })
 keymap.set("n", "]d", function()
   vim.diagnostic.jump({ count = 1 })
 end, { desc = "Go to next diagnostic" })
-keymap.set("n", "<leader>dl", vim.diagnostic.setloclist, { desc = "Show diagnostics in location list" })
+keymap.set("n", "<leader>xl", vim.diagnostic.setloclist, { desc = "Show diagnostics in location list" })
 
 -- LSP-aware keymaps (automatically set when LSP attaches)
 -- Documentation

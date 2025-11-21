@@ -40,8 +40,10 @@ return {
       { "<leader>c", group = "Code" },
       { "<leader>k", desc = "Signature help" },
 
-      -- Diagnostics
-      { "<leader>d", group = "Diagnostics" },
+      -- Debug
+      { "<leader>d", group = "Debug" },
+      { "<leader>db", group = "Breakpoints" },
+      { "<leader>ds", group = "Step" },
 
       -- Find/Files
       { "<leader>f", group = "Find/Files" },
@@ -65,8 +67,8 @@ return {
       -- Search
       { "<leader>s", group = "Search" },
 
-      -- Tabs
-      { "<leader>t", group = "Tabs" },
+      -- Tabs/Tests
+      { "<leader>t", group = "Tabs/Tests" },
       { "<leader>tm", group = "Tab Move" },
 
       -- Scratch Buffers
@@ -75,8 +77,8 @@ return {
       -- Window/Split Management & Workspace
       { "<leader>w", group = "Window/Workspace" },
 
-      -- Linter/Fixer (ALE)
-      { "<leader>x", group = "Linter/Fixer" },
+      -- Diagnostics
+      { "<leader>x", group = "Diagnostics" },
 
       -- Clipboard
       { "<leader>y", desc = "Copy to system clipboard" },
