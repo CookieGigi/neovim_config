@@ -31,6 +31,24 @@ vim.api.nvim_create_user_command("LspRestart", function()
   end, 100)
 end, { desc = "Restart LSP servers" })
 
+vim.api.nvim_create_user_command("LspInfo", function()
+  local clients = vim.lsp.get_clients({ bufnr = 0 })
+  if #clients == 0 then
+    print("No LSP clients attached to current buffer")
+    return
+  end
+
+  local lines = { "LSP clients attached to buffer " .. vim.api.nvim_get_current_buf() .. ":" }
+  for _, client in ipairs(clients) do
+    table.insert(lines, "")
+    table.insert(lines, "Client: " .. client.name .. " (id: " .. client.id .. ")")
+    table.insert(lines, "  Root dir: " .. (client.config.root_dir or "N/A"))
+    table.insert(lines, "  Filetypes: " .. table.concat(client.config.filetypes or {}, ", "))
+  end
+
+  vim.api.nvim_echo({ { table.concat(lines, "\n"), "Normal" } }, true, {})
+end, { desc = "Show LSP client info" })
+
 -- Configure lua_ls using vim.lsp.config()
 vim.lsp.config("lua_ls", {
   cmd = { "lua-language-server" },
