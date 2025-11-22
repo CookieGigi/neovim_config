@@ -23,6 +23,12 @@ base/
    # Stylua (Lua formatter)
    cargo install stylua
    # OR use your system package manager
+
+   # Ansible Language Server (for YAML/Ansible support)
+   npm install -g @ansible/ansible-language-server
+
+   # Optional: ansible-lint (for enhanced validation)
+   pip install ansible-lint
    ```
 
 2. **Backup your existing config** (if you have one):

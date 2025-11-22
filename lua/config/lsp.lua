@@ -73,5 +73,36 @@ vim.lsp.config("lua_ls", {
   },
 })
 
+-- Configure ansible-language-server
+-- Requires: npm install -g @ansible/ansible-language-server
+vim.lsp.config("ansiblels", {
+  cmd = { "ansible-language-server", "--stdio" },
+  filetypes = { "yaml.ansible", "yaml" },
+  root_markers = { { "ansible.cfg", ".ansible-lint" }, { "playbook.yml", "playbooks" }, ".git" },
+  settings = {
+    ansible = {
+      python = {
+        interpreterPath = "python3",
+      },
+      ansible = {
+        path = "ansible",
+      },
+      executionEnvironment = {
+        enabled = false,
+      },
+      validation = {
+        enabled = true,
+        lint = {
+          enabled = true,
+          path = "ansible-lint",
+        },
+      },
+    },
+  },
+})
+
 -- Enable lua_ls
 vim.lsp.enable("lua_ls")
+
+-- Enable ansiblels
+vim.lsp.enable("ansiblels")
