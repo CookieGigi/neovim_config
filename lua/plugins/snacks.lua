@@ -105,6 +105,16 @@ return {
       enabled = true,
       -- Default confirm action opens in tab
       confirm = "tab",
+      -- Database configuration for SQLite3
+      db = {
+        -- Path to the sqlite3 library (libsqlite3.so)
+        sqlite3_path = "/nix/store/jqrf546vxc6nzf4575m4am3w4ywq765i-sqlite-3.50.4/lib/libsqlite3.so",
+      },
+      -- Matcher configuration with frecency and history bonuses
+      matcher = {
+        frecency = true, -- enable frecency bonus for better file ranking
+        history_bonus = true, -- give more weight to chronological order
+      },
       -- Frecency tracking with SQLite3
       frecency = {
         enabled = true,
@@ -512,12 +522,11 @@ return {
       desc = "Goto Declaration",
     },
     {
-      "gr",
+      "gR",
       function()
         require("snacks").picker.lsp_references()
       end,
-      nowait = true,
-      desc = "References",
+      desc = "References (Picker)",
     },
     {
       "gI",
