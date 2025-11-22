@@ -61,8 +61,9 @@ return {
       -- Clipboard
       { "<leader>p", desc = "Paste from system clipboard" },
 
-      -- Quickfix & Location Lists
-      { "<leader>q", group = "Quickfix/Lists" },
+      -- Quickfix & Location Lists / Quit
+      { "<leader>q", group = "Quickfix/Lists/Quit" },
+      { "<C-q>", desc = "Quit all" },
 
       -- Search
       { "<leader>s", group = "Search" },

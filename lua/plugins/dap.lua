@@ -54,7 +54,7 @@ return {
     -- Inspection
     { "<leader>di", function() require("dap.ui.widgets").centered_float(require("dap.ui.widgets").scopes) end, desc = "Inspect scopes" },
     { "<leader>df", function() require("dap.ui.widgets").centered_float(require("dap.ui.widgets").frames) end, desc = "Show frames" },
-    { "<leader>dt", function() require("dap.ui.widgets").centered_float(require("dap.ui.widgets").threads) end, desc = "Show threads" },
+    { "<leader>dT", function() require("dap.ui.widgets").centered_float(require("dap.ui.widgets").threads) end, desc = "Show threads" },
   },
   config = function()
     local dap = require("dap")
