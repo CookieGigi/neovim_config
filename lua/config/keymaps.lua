@@ -108,9 +108,11 @@ keymap.set("n", "<leader>k", vim.lsp.buf.signature_help, {
 })
 
 -- Code actions
-keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, {
+keymap.set({ "n", "v" }, "<leader>ca", function()
+  require("actions-preview").code_actions()
+end, {
   lsp = { method = "textDocument/codeAction" },
-  desc = "Code actions",
+  desc = "Code actions (preview)",
 })
 keymap.set("n", "<leader>cr", vim.lsp.buf.rename, {
   lsp = { method = "textDocument/rename" },
