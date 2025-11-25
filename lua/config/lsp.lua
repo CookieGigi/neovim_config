@@ -73,5 +73,32 @@ vim.lsp.config("lua_ls", {
   },
 })
 
+-- Configure basedpyright for Python
+vim.lsp.config("basedpyright", {
+  cmd = { "basedpyright-langserver", "--stdio" },
+  filetypes = { "python" },
+  root_markers = {
+    { "pyproject.toml", "setup.py", "setup.cfg", "requirements.txt", "Pipfile", "pyrightconfig.json" },
+    ".git",
+  },
+  settings = {
+    basedpyright = {
+      analysis = {
+        -- Use workspace root for analysis
+        autoSearchPaths = true,
+        -- Use Python from virtual environment if available
+        useLibraryCodeForTypes = true,
+        -- Diagnostic mode: "openFilesOnly" or "workspace"
+        diagnosticMode = "openFilesOnly",
+        -- Type checking mode: "off", "basic", "standard", "strict"
+        typeCheckingMode = "basic",
+      },
+    },
+  },
+})
+
 -- Enable lua_ls
 vim.lsp.enable("lua_ls")
+
+-- Enable basedpyright
+vim.lsp.enable("basedpyright")

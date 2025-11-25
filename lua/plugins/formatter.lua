@@ -30,6 +30,7 @@ return {
         json = { "biome" },
         jsonc = { "biome" },
         markdown = { "prettier" },
+        python = { "ruff_format", "ruff_organize_imports" },
       },
       format_on_save = {
         -- Enable format on save (set to false to disable)

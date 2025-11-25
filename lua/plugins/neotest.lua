@@ -6,6 +6,8 @@ return {
     "nvim-lua/plenary.nvim",
     "antoinemadec/FixCursorHold.nvim",
     "nvim-treesitter/nvim-treesitter",
+    -- Python test adapter
+    "nvim-neotest/neotest-python",
   },
   keys = {
     -- Test execution
@@ -36,13 +38,27 @@ return {
   },
   config = function()
     require("neotest").setup({
-      -- Adapters (empty by default - add language-specific adapters in specialized configs)
-      -- Example for specialized configs:
-      -- adapters = {
-      --   require("neotest-python")({ dap = { justMyCode = false } }),
-      --   require("neotest-go")({ args = { "-count=1", "-timeout=60s" } }),
-      -- }
-      adapters = {},
+      -- Adapters
+      adapters = {
+        require("neotest-python")({
+          -- Use debugpy for debugging tests
+          dap = { justMyCode = false },
+          -- Test runner (pytest or unittest)
+          runner = "pytest",
+          -- Python interpreter (defaults to system python or virtualenv)
+          python = function()
+            local venv = os.getenv("VIRTUAL_ENV")
+            if venv then
+              return venv .. "/bin/python"
+            end
+            return "python"
+          end,
+          -- pytest arguments
+          args = { "--log-level", "DEBUG", "--quiet" },
+          -- Discover pytest tests
+          pytest_discover_instances = true,
+        }),
+      },
 
       -- Discovery
       discovery = {

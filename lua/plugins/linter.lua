@@ -14,6 +14,7 @@ return {
       json = { "biome" },
       jsonc = { "biome" },
       markdown = { "markdownlint" },
+      python = { "ruff", "mypy" },
     }
 
     -- Fixers by filetype
@@ -21,6 +22,7 @@ return {
       json = { "biome" },
       jsonc = { "biome" },
       markdown = { "markdownlint", "prettier" },
+      python = { "ruff" },
     }
 
     -- General settings
