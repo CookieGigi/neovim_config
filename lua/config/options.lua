@@ -54,6 +54,6 @@ vim.opt.switchbuf = "usetab,newtab" -- Jump to existing tab or create new one
 
 -- Netrw (file explorer) settings
 vim.g.netrw_banner = 0 -- Hide banner
-vim.g.netrw_liststyle = 3 -- Tree view
+vim.g.netrw_liststyle = 0 -- Tree view
 vim.g.netrw_browse_split = 3 -- Open files in new tabs
 vim.g.netrw_winsize = 25 -- Window size percentage
