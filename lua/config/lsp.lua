@@ -25,10 +25,26 @@ end
 
 -- LSP user commands
 vim.api.nvim_create_user_command("LspRestart", function()
-  vim.cmd("LspStop")
-  vim.defer_fn(function()
-    vim.cmd("LspStart")
-  end, 100)
+  local clients = vim.lsp.get_clients({ bufnr = 0 })
+  if #clients == 0 then
+    print("No LSP clients to restart")
+    return
+  end
+
+  for _, client in ipairs(clients) do
+    local bufs = vim.lsp.get_buffers_by_client_id(client.id)
+    vim.lsp.stop_client(client.id)
+
+    vim.defer_fn(function()
+      for _, buf in ipairs(bufs) do
+        if vim.api.nvim_buf_is_valid(buf) then
+          vim.api.nvim_exec_autocmds("FileType", { buffer = buf })
+        end
+      end
+    end, 100)
+  end
+
+  print("LSP clients restarted")
 end, { desc = "Restart LSP servers" })
 
 vim.api.nvim_create_user_command("LspInfo", function()
