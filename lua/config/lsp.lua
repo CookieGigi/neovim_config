@@ -44,10 +44,26 @@ vim.api.nvim_create_user_command("LspInfo", function()
     table.insert(lines, "Client: " .. client.name .. " (id: " .. client.id .. ")")
     table.insert(lines, "  Root dir: " .. (client.config.root_dir or "N/A"))
     table.insert(lines, "  Filetypes: " .. table.concat(client.config.filetypes or {}, ", "))
+    table.insert(lines, "  Cmd: " .. vim.inspect(client.config.cmd))
   end
 
   vim.api.nvim_echo({ { table.concat(lines, "\n"), "Normal" } }, true, {})
 end, { desc = "Show LSP client info" })
+
+vim.api.nvim_create_user_command("LspDebug", function()
+  local all_clients = vim.lsp.get_clients()
+  local configs = vim.lsp.get_configs()
+
+  print("=== All LSP Clients ===")
+  for _, client in ipairs(all_clients) do
+    print(string.format("ID: %d, Name: %s, Root: %s", client.id, client.name, client.config.root_dir or "N/A"))
+  end
+
+  print("\n=== LSP Configs ===")
+  for name, config in pairs(configs) do
+    print(string.format("Config name: %s", name))
+  end
+end, { desc = "Debug LSP configuration" })
 
 -- Configure lua_ls using vim.lsp.config()
 vim.lsp.config("lua_ls", {
@@ -75,3 +91,69 @@ vim.lsp.config("lua_ls", {
 
 -- Enable lua_ls
 vim.lsp.enable("lua_ls")
+
+-- Configure rust-analyzer
+vim.lsp.config("rust-analyzer", {
+  cmd = { "rust-analyzer" },
+  filetypes = { "rust" },
+  root_markers = { "Cargo.toml", "rust-project.json" },
+  settings = {
+    ["rust-analyzer"] = {
+      cargo = {
+        allFeatures = true,
+        loadOutDirsFromCheck = true,
+        buildScripts = {
+          enable = true,
+        },
+      },
+      check = {
+        command = "clippy",
+        allFeatures = true,
+      },
+      procMacro = {
+        enable = true,
+      },
+      diagnostics = {
+        enable = true,
+        experimental = {
+          enable = true,
+        },
+      },
+      inlayHints = {
+        bindingModeHints = {
+          enable = false,
+        },
+        chainingHints = {
+          enable = true,
+        },
+        closingBraceHints = {
+          enable = true,
+          minLines = 25,
+        },
+        closureReturnTypeHints = {
+          enable = "never",
+        },
+        lifetimeElisionHints = {
+          enable = "never",
+          useParameterNames = false,
+        },
+        maxLength = 25,
+        parameterHints = {
+          enable = true,
+        },
+        reborrowHints = {
+          enable = "never",
+        },
+        renderColons = true,
+        typeHints = {
+          enable = true,
+          hideClosureInitialization = false,
+          hideNamedConstructor = false,
+        },
+      },
+    },
+  },
+})
+
+-- Enable rust-analyzer
+vim.lsp.enable("rust-analyzer")

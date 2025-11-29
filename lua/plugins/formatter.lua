@@ -2,6 +2,7 @@
 -- Formatter configuration using conform.nvim
 -- Required external dependencies:
 -- - stylua (install via cargo install stylua or system package manager)
+-- - rustfmt (install via rustup component add rustfmt)
 -- - prettier (install via npm install -g prettier)
 
 return {
@@ -27,6 +28,7 @@ return {
     conform.setup({
       formatters_by_ft = {
         lua = { "stylua" },
+        rust = { "rustfmt" },
         json = { "biome" },
         jsonc = { "biome" },
         markdown = { "prettier" },

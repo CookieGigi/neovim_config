@@ -52,6 +52,7 @@ return {
       "markdown_inline",
       "query",
       "regex",
+      "rust",
       "toml",
       "vim",
       "vimdoc",

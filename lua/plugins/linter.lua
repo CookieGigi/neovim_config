@@ -1,6 +1,9 @@
 ---@diagnostic disable: undefined-global
 -- Linter configuration using ALE (Asynchronous Lint Engine)
 -- Required external dependencies:
+-- - rust-analyzer (install via rustup component add rust-analyzer)
+-- - clippy (install via rustup component add clippy)
+-- - rustfmt (install via rustup component add rustfmt)
 -- - biome (install via npm install -g @biomejs/biome)
 -- - markdownlint-cli (install via npm install -g markdownlint-cli)
 -- - prettier (install via npm install -g prettier)
@@ -11,6 +14,7 @@ return {
   config = function()
     -- Linters by filetype
     vim.g.ale_linters = {
+      rust = { "analyzer", "cargo", "clippy" },
       json = { "biome" },
       jsonc = { "biome" },
       markdown = { "markdownlint" },
@@ -18,6 +22,7 @@ return {
 
     -- Fixers by filetype
     vim.g.ale_fixers = {
+      rust = { "rustfmt" },
       json = { "biome" },
       jsonc = { "biome" },
       markdown = { "markdownlint", "prettier" },
