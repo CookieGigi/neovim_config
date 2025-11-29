@@ -103,8 +103,30 @@ return {
     },
     picker = {
       enabled = true,
-      -- Default confirm action opens in tab
-      confirm = "tab",
+      -- Configure per-picker confirm actions via kinds
+      -- This prevents conflicts with non-file pickers like code actions
+      kinds = {
+        -- File-based pickers open in tabs
+        files = { confirm = "tab" },
+        git_files = { confirm = "tab" },
+        buffers = { confirm = "tab" },
+        grep = { confirm = "tab" },
+        live_grep = { confirm = "tab" },
+        recent = { confirm = "tab" },
+        oldfiles = { confirm = "tab" },
+        grep_buffers = { confirm = "tab" },
+        lines = { confirm = "tab" },
+        -- LSP pickers open in tabs
+        lsp_definitions = { confirm = "tab" },
+        lsp_declarations = { confirm = "tab" },
+        lsp_references = { confirm = "tab" },
+        lsp_implementations = { confirm = "tab" },
+        lsp_type_definitions = { confirm = "tab" },
+        lsp_symbols = { confirm = "tab" },
+        -- Code actions use default confirm (executes the action)
+        -- This fixes the "Either item.buf or item.file is required" error
+        codeaction = {},
+      },
       -- Database configuration for SQLite3
       db = {
         -- Path to the sqlite3 library (libsqlite3.so)
