@@ -12,3 +12,5 @@ require("config.diagnostic")
 
 -- LSP
 require("config.lsp")
+
+-- DAP Adapters are now loaded in lua/plugins/dap.lua config function
