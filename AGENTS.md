@@ -1,5 +1,7 @@
 # Agent Guidelines for Neovim Config
 
+> **Note**: This branch is dedicated to self-hosting configurations including YAML, Ansible, Terraform, and related infrastructure-as-code tools.
+
 ## Testing
 
 - Test config: `nvim --headless +checkhealth +qa`
