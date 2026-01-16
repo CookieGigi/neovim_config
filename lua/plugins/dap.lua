@@ -12,6 +12,8 @@ return {
     -- Virtual text support for variable values
     "theHamsta/nvim-dap-virtual-text",
   },
+  -- Load DAP when any Rust file is opened or when any key is pressed
+  event = "VeryLazy",
   keys = {
     -- F-keys for quick debugging (standard IDE conventions)
     { "<F5>", function() require("dap").continue() end, desc = "Debug: Continue" },
@@ -28,7 +30,7 @@ return {
     { "<leader>dp", function() require("dap").pause() end, desc = "Pause" },
 
     -- Breakpoints
-    { "<leader>db", function() require("dap").toggle_breakpoint() end, desc = "Toggle breakpoint" },
+    { "<leader>dbt", function() require("dap").toggle_breakpoint() end, desc = "Toggle breakpoint" },
     { "<leader>dB", function() require("dap").set_breakpoint(vim.fn.input("Breakpoint condition: ")) end, desc = "Conditional breakpoint" },
     { "<leader>dL", function() require("dap").set_breakpoint(nil, nil, vim.fn.input("Log point message: ")) end, desc = "Log point" },
     { "<leader>dbl", function() require("dap").list_breakpoints() end, desc = "List breakpoints" },
@@ -146,18 +148,17 @@ return {
     end
 
     -- DAP signs
-    vim.fn.sign_define("DapBreakpoint", { text = "", texthl = "DiagnosticError", linehl = "", numhl = "" })
-    vim.fn.sign_define("DapBreakpointCondition", { text = "", texthl = "DiagnosticWarn", linehl = "", numhl = "" })
-    vim.fn.sign_define("DapBreakpointRejected", { text = "", texthl = "DiagnosticInfo", linehl = "", numhl = "" })
-    vim.fn.sign_define("DapLogPoint", { text = "", texthl = "DiagnosticInfo", linehl = "", numhl = "" })
-    vim.fn.sign_define("DapStopped", { text = "", texthl = "DiagnosticHint", linehl = "DapStoppedLine", numhl = "" })
+    vim.fn.sign_define("DapBreakpoint", { text = "●", texthl = "DiagnosticError", linehl = "", numhl = "" })
+    vim.fn.sign_define("DapBreakpointCondition", { text = "◆", texthl = "DiagnosticWarn", linehl = "", numhl = "" })
+    vim.fn.sign_define("DapBreakpointRejected", { text = "○", texthl = "DiagnosticInfo", linehl = "", numhl = "" })
+    vim.fn.sign_define("DapLogPoint", { text = "◉", texthl = "DiagnosticInfo", linehl = "", numhl = "" })
+    vim.fn.sign_define("DapStopped", { text = "→", texthl = "DiagnosticHint", linehl = "DapStoppedLine", numhl = "" })
 
     -- Highlight for stopped line
     vim.api.nvim_set_hl(0, "DapStoppedLine", { default = true, link = "Visual" })
 
-    -- Debug adapter configurations
-    -- NOTE: Debug adapters must be installed independently
-    -- Refer to: https://codeberg.org/mfussenegger/nvim-dap/wiki/Debug-Adapter-installation
-    -- Configure adapters in language-specific config files or a separate dap-adapters.lua file
+    -- Load adapter configurations
+    -- This ensures adapters are loaded after nvim-dap is fully initialized
+    require("config.dap-adapters")
   end,
 }
