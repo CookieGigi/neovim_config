@@ -4,6 +4,7 @@
 -- - biome (install via npm install -g @biomejs/biome)
 -- - markdownlint-cli (install via npm install -g markdownlint-cli)
 -- - prettier (install via npm install -g prettier)
+-- - eslint (install via npm install -g eslint)
 
 return {
   "dense-analysis/ale",
@@ -11,6 +12,10 @@ return {
   config = function()
     -- Linters by filetype
     vim.g.ale_linters = {
+      javascript = { "eslint" },
+      javascriptreact = { "eslint" },
+      typescript = { "eslint" },
+      typescriptreact = { "eslint" },
       json = { "biome" },
       jsonc = { "biome" },
       markdown = { "markdownlint" },
@@ -18,6 +23,10 @@ return {
 
     -- Fixers by filetype
     vim.g.ale_fixers = {
+      javascript = { "eslint" },
+      javascriptreact = { "eslint" },
+      typescript = { "eslint" },
+      typescriptreact = { "eslint" },
       json = { "biome" },
       jsonc = { "biome" },
       markdown = { "markdownlint", "prettier" },
