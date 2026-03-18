@@ -59,3 +59,11 @@ nvim-rust .
 # Or manually:
 # NVIM_APPNAME=neovim/rust nvim .
 ```
+
+## Language-Specific Configurations
+
+For additional dependencies needed by other worktrees:
+
+- [python/DEPENDENCIES.md](../python/DEPENDENCIES.md) - Python development
+- [rust/DEPENDENCIES.md](../rust/DEPENDENCIES.md) - Rust development
+- [node/DEPENDENCIES.md](../node/DEPENDENCIES.md) - TypeScript/Node.js development
