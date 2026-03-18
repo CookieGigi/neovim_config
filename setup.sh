@@ -132,7 +132,7 @@ add_aliases() {
     local alias_cmd="NVIM_APPNAME=neovim/${worktree} nvim"
 
     # Check if alias already exists
-    if grep -q "alias ${alias_name}=" "$shell_rc" 2>/dev/null; then
+    if grep -qE "^alias ${alias_name}[[:space:]]*=" "$shell_rc" 2>/dev/null; then
       print_success "Alias already exists: $alias_name"
       continue
     fi
