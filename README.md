@@ -17,18 +17,42 @@ base/
 
 ## Installation
 
+### Quick Setup (Recommended)
+
+Use the provided setup script to automatically create symlinks and aliases:
+
+```bash
+cd ~/Project/neovim/base
+./setup.sh
+```
+
+This will:
+- Create symlinks in `~/.config/neovim/` pointing to each worktree
+- Add aliases to your shell config (`nvim-base`, `nvim-python`, etc.)
+
+### Manual Setup
+
 1. **Install required external tools**:
 
+   See [DEPENDENCIES.md](./DEPENDENCIES.md) for the full list.
+
    ```bash
-   # Stylua (Lua formatter)
-   cargo install stylua
-   # OR use your system package manager
+    # Stylua (Lua formatter)
+    cargo install stylua
+    # OR use your system package manager
 
-   # Ansible Language Server (for YAML/Ansible support)
-   npm install -g @ansible/ansible-language-server
+    # Node.js tools (biome, prettier, markdownlint)
+    npm install -g @biomejs/biome prettier markdownlint-cli
 
-   # Optional: ansible-lint (for enhanced validation)
-   pip install ansible-lint
+    # Lua LSP (via your package manager)
+    # Ubuntu/Debian: sudo apt install lua-language-server
+    # Arch: sudo pacman -S lua-language-server
+
+    # Ansible Language Server (for YAML/Ansible support)
+    npm install -g @ansible/ansible-language-server
+
+    # Optional: ansible-lint (for enhanced validation)
+    pip install ansible-lint
    ```
 
 2. **Backup your existing config** (if you have one):
@@ -40,18 +64,86 @@ base/
 3. **Symlink or copy this config**:
 
    ```bash
+   # For single config usage:
    ln -s ~/Project/neovim/base ~/.config/nvim
-   # OR
-   cp -r ~/Project/neovim/base ~/.config/nvim
+
+   # For multiple configs with NVIM_APPNAME:
+   mkdir -p ~/.config/neovim
+   ln -s ~/Project/neovim/base ~/.config/neovim/base
+   ln -s ~/Project/neovim/python ~/.config/neovim/python
+   ln -s ~/Project/neovim/rust ~/.config/neovim/rust
+   ln -s ~/Project/neovim/node ~/.config/neovim/node
    ```
 
-4. **Launch Neovim**:
+4. **Add aliases to your shell** (`.bashrc` or `.zshrc`):
 
    ```bash
+   # Base config
+   alias nvim-base='NVIM_APPNAME=neovim/base nvim'
+
+   # Language-specific configs
+   alias nvim-python='NVIM_APPNAME=neovim/python nvim'
+   alias nvim-rust='NVIM_APPNAME=neovim/rust nvim'
+   alias nvim-node='NVIM_APPNAME=neovim/node nvim'
+   ```
+
+5. **Launch Neovim**:
+
+   ```bash
+   # Using default config
    nvim
+
+   # Using specific config with NVIM_APPNAME
+   NVIM_APPNAME=neovim/base nvim
+
+   # Or using aliases
+   nvim-base
+   nvim-python .
+   nvim-rust src/
    ```
 
    On first launch, lazy.nvim will automatically install itself and plugins.
+
+## Multiple Configurations
+
+This repository uses **git worktrees** to manage multiple Neovim configurations:
+
+| Worktree | Branch | Purpose |
+|----------|--------|---------|
+| `base/` | main | Base configuration (Lua, JSON, Markdown) |
+| `python/` | python | Python development (includes base + Python LSP) |
+| `rust/` | rust | Rust development (includes base + Rust LSP) |
+| `node/` | node | TypeScript/Node.js (includes base + TS LSP) |
+
+### How NVIM_APPNAME Works
+
+`NVIM_APPNAME` tells Neovim which configuration directory to use (relative to `~/.config/`):
+
+```bash
+# Uses ~/.config/neovim/base
+NVIM_APPNAME=neovim/base nvim
+
+# Uses ~/.config/neovim/python
+NVIM_APPNAME=neovim/python nvim
+```
+
+### Project-Based Usage
+
+Switch configs based on project type:
+
+```bash
+# Python project
+cd ~/projects/my-python-app
+nvim-python .
+
+# Rust project
+cd ~/projects/my-rust-app
+nvim-rust .
+
+# TypeScript/React project
+cd ~/projects/my-react-app
+nvim-node .
+```
 
 ## Key Mappings
 

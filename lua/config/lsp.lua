@@ -1,5 +1,7 @@
 ---@diagnostic disable: undefined-global
 
+vim.lsp.set_log_level("debug")
+
 -- Diagnostic configuration
 vim.diagnostic.config({
   virtual_text = true,
@@ -117,8 +119,29 @@ vim.lsp.config("ansiblels", {
   },
 })
 
+-- Configure terraform-ls
+-- Requires: terraform-ls (e.g. via mason or package manager)
+vim.lsp.config("terraformls", {
+  cmd = { "terraform-ls", "serve" },
+  filetypes = { "terraform", "terraform-vars", "hcl" },
+  root_markers = { ".terraform", ".git", "main.tf" },
+  -- Explicitly define capabilities as a map
+  capabilities = {
+    textDocument = {
+      semanticTokens = vim.empty_dict(), -- Prevents the slice error on highlighting
+    },
+    workspace = {
+      workspaceFolders = true,
+    },
+  },
+  settings = vim.empty_dict(),
+})
+
 -- Enable lua_ls
 vim.lsp.enable("lua_ls")
 
 -- Enable ansiblels
 vim.lsp.enable("ansiblels")
+
+-- Enable terraform-ls
+vim.lsp.enable("terraformls")
