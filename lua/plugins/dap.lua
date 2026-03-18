@@ -12,6 +12,8 @@ return {
     -- Virtual text support for variable values
     "theHamsta/nvim-dap-virtual-text",
   },
+  -- Load DAP when any Rust file is opened or when any key is pressed
+  event = "VeryLazy",
   keys = {
     -- F-keys for quick debugging (standard IDE conventions)
     { "<F5>", function() require("dap").continue() end, desc = "Debug: Continue" },
@@ -28,7 +30,7 @@ return {
     { "<leader>dp", function() require("dap").pause() end, desc = "Pause" },
 
     -- Breakpoints
-    { "<leader>db", function() require("dap").toggle_breakpoint() end, desc = "Toggle breakpoint" },
+    { "<leader>dbt", function() require("dap").toggle_breakpoint() end, desc = "Toggle breakpoint" },
     { "<leader>dB", function() require("dap").set_breakpoint(vim.fn.input("Breakpoint condition: ")) end, desc = "Conditional breakpoint" },
     { "<leader>dL", function() require("dap").set_breakpoint(nil, nil, vim.fn.input("Log point message: ")) end, desc = "Log point" },
     { "<leader>dbl", function() require("dap").list_breakpoints() end, desc = "List breakpoints" },
@@ -146,85 +148,21 @@ return {
     end
 
     -- DAP signs
-    vim.fn.sign_define("DapBreakpoint", { text = "", texthl = "DiagnosticError", linehl = "", numhl = "" })
-    vim.fn.sign_define("DapBreakpointCondition", { text = "", texthl = "DiagnosticWarn", linehl = "", numhl = "" })
-    vim.fn.sign_define("DapBreakpointRejected", { text = "", texthl = "DiagnosticInfo", linehl = "", numhl = "" })
-    vim.fn.sign_define("DapLogPoint", { text = "", texthl = "DiagnosticInfo", linehl = "", numhl = "" })
-    vim.fn.sign_define("DapStopped", { text = "", texthl = "DiagnosticHint", linehl = "DapStoppedLine", numhl = "" })
+    vim.fn.sign_define("DapBreakpoint", { text = "●", texthl = "DiagnosticError", linehl = "", numhl = "" })
+    vim.fn.sign_define("DapBreakpointCondition", { text = "◆", texthl = "DiagnosticWarn", linehl = "", numhl = "" })
+    vim.fn.sign_define("DapBreakpointRejected", { text = "○", texthl = "DiagnosticInfo", linehl = "", numhl = "" })
+    vim.fn.sign_define("DapLogPoint", { text = "◉", texthl = "DiagnosticInfo", linehl = "", numhl = "" })
+    vim.fn.sign_define("DapStopped", { text = "→", texthl = "DiagnosticHint", linehl = "DapStoppedLine", numhl = "" })
 
     -- Highlight for stopped line
     vim.api.nvim_set_hl(0, "DapStoppedLine", { default = true, link = "Visual" })
 
-    -- Debug adapter configurations
-    -- NOTE: Debug adapters must be installed independently
-    -- Refer to: https://codeberg.org/mfussenegger/nvim-dap/wiki/Debug-Adapter-installation
-
-    -- Python (debugpy)
-    dap.adapters.python = {
-      type = "executable",
-      command = "python",
-      args = { "-m", "debugpy.adapter" },
-    }
-
-    dap.configurations.python = {
-      {
-        type = "python",
-        request = "launch",
-        name = "Launch file",
-        program = "${file}",
-        pythonPath = function()
-          -- Try to use virtual environment python if available
-          local venv = os.getenv("VIRTUAL_ENV")
-          if venv then
-            return venv .. "/bin/python"
-          end
-          -- Fallback to system python
-          return "python"
-        end,
-      },
-      {
-        type = "python",
-        request = "launch",
-        name = "Launch file with arguments",
-        program = "${file}",
-        args = function()
-          local args_string = vim.fn.input("Arguments: ")
-          return vim.split(args_string, " +")
-        end,
-        pythonPath = function()
-          local venv = os.getenv("VIRTUAL_ENV")
-          if venv then
-            return venv .. "/bin/python"
-          end
-          return "python"
-        end,
-      },
-      {
-        type = "python",
-        request = "launch",
-        name = "Launch module",
-        module = function()
-          return vim.fn.input("Module name: ")
-        end,
-        pythonPath = function()
-          local venv = os.getenv("VIRTUAL_ENV")
-          if venv then
-            return venv .. "/bin/python"
-          end
-          return "python"
-        end,
-      },
-      {
-        type = "python",
-        request = "attach",
-        name = "Attach remote",
-        connect = function()
-          local host = vim.fn.input("Host [127.0.0.1]: ")
-          host = host ~= "" and host or "127.0.0.1"
-          local port = tonumber(vim.fn.input("Port [5678]: ")) or 5678
-          return { host = host, port = port }
-        end,
-      },
-    }
+    -- Load adapter configurations
+    -- This ensures adapters are loaded after nvim-dap is fully initialized
+    -- Only load if the config file exists (worktree-specific adapters)
+    local adapters_path = vim.fn.stdpath("config") .. "/lua/config/dap-adapters.lua"
+    if vim.fn.filereadable(adapters_path) == 1 then
+      require("config.dap-adapters")
+    end
   end,
 }
