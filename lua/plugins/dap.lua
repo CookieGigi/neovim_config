@@ -159,6 +159,10 @@ return {
 
     -- Load adapter configurations
     -- This ensures adapters are loaded after nvim-dap is fully initialized
-    require("config.dap-adapters")
+    -- Only load if the config file exists (worktree-specific adapters)
+    local adapters_path = vim.fn.stdpath("config") .. "/lua/config/dap-adapters.lua"
+    if vim.fn.filereadable(adapters_path) == 1 then
+      require("config.dap-adapters")
+    end
   end,
 }
