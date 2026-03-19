@@ -4,9 +4,6 @@ return {
   priority = 1000,
   lazy = false,
   opts = {
-    -- your configuration comes here
-    -- or leave it empty to use the default settings
-    -- refer to the configuration section below
     animate = {
       enabled = true,
       duration = 20,
@@ -75,7 +72,7 @@ return {
     gitbrowse = { enabled = true },
     indent = { enabled = true },
     input = { enabled = true },
-    keymap = { enabled = true },
+    keymap = { enabled = false }, -- Disabled - using vim.keymap.set directly
     lazygit = {
       configure = true,
       config = {
@@ -103,10 +100,7 @@ return {
     },
     picker = {
       enabled = true,
-      -- Configure per-picker confirm actions via kinds
-      -- This prevents conflicts with non-file pickers like code actions
       kinds = {
-        -- File-based pickers open in tabs
         files = { confirm = "tab" },
         git_files = { confirm = "tab" },
         buffers = { confirm = "tab" },
@@ -116,34 +110,26 @@ return {
         oldfiles = { confirm = "tab" },
         grep_buffers = { confirm = "tab" },
         lines = { confirm = "tab" },
-        -- LSP pickers open in tabs
         lsp_definitions = { confirm = "tab" },
         lsp_declarations = { confirm = "tab" },
         lsp_references = { confirm = "tab" },
         lsp_implementations = { confirm = "tab" },
         lsp_type_definitions = { confirm = "tab" },
         lsp_symbols = { confirm = "tab" },
-        -- Code actions use default confirm (executes the action)
-        -- This fixes the "Either item.buf or item.file is required" error
         codeaction = {},
       },
-      -- Database configuration for SQLite3
       db = {
-        -- Path to the sqlite3 library (libsqlite3.so)
         sqlite3_path = "/nix/store/jqrf546vxc6nzf4575m4am3w4ywq765i-sqlite-3.50.4/lib/libsqlite3.so",
       },
-      -- Matcher configuration with frecency and history bonuses
       matcher = {
-        frecency = true, -- enable frecency bonus for better file ranking
-        history_bonus = true, -- give more weight to chronological order
+        frecency = true,
+        history_bonus = true,
       },
-      -- Frecency tracking with SQLite3
       frecency = {
         enabled = true,
         backend = "sqlite",
         db_path = vim.fn.stdpath("data") .. "/snacks/frecency.db",
       },
-      -- History tracking with SQLite3
       history = {
         enabled = true,
         backend = "sqlite",
@@ -153,17 +139,13 @@ return {
       win = {
         input = {
           keys = {
-            -- <CR> opens in new tab (default)
             ["<cr>"] = { "tab", mode = { "n", "i" } },
-            -- <C-e> opens in current buffer (override)
             ["<c-e>"] = { "confirm", mode = { "n", "i" } },
           },
         },
         list = {
           keys = {
-            -- <CR> opens in new tab (default)
             ["<cr>"] = "tab",
-            -- <C-e> opens in current buffer (override)
             ["<c-e>"] = "confirm",
           },
         },
@@ -223,7 +205,9 @@ return {
     words = { enabled = true },
   },
   keys = {
-    -- Top Pickers
+    -- ============================================================================
+    -- Top Pickers (Direct Access)
+    -- ============================================================================
     {
       "<leader><space>",
       function()
@@ -253,7 +237,9 @@ return {
       desc = "Command History",
     },
 
-    -- Find
+    -- ============================================================================
+    -- Find/Files (<leader>f*)
+    -- ============================================================================
     {
       "<leader>fb",
       function()
@@ -278,7 +264,11 @@ return {
     {
       "<leader>fg",
       function()
-        require("snacks").picker.git_files()
+        if require("snacks").git.get_root() then
+          require("snacks").picker.git_files()
+        else
+          vim.notify("Not in a git repository", vim.log.levels.WARN)
+        end
       end,
       desc = "Find Git Files",
     },
@@ -297,93 +287,145 @@ return {
       desc = "Recent",
     },
 
-    -- Git
+    -- ============================================================================
+    -- Git (<leader>g*)
+    -- ============================================================================
     {
       "<leader>gb",
       function()
-        require("snacks").picker.git_branches()
+        if require("snacks").git.get_root() then
+          require("snacks").picker.git_branches()
+        else
+          vim.notify("Not in a git repository", vim.log.levels.WARN)
+        end
       end,
       desc = "Git Branches",
     },
     {
       "<leader>gB",
       function()
-        require("snacks").git.blame_line()
+        if require("snacks").git.get_root() then
+          require("snacks").git.blame_line()
+        else
+          vim.notify("Not in a git repository", vim.log.levels.WARN)
+        end
       end,
       desc = "Git Blame Line",
     },
     {
       "<leader>gg",
       function()
-        require("snacks").lazygit.open()
+        if require("snacks").git.get_root() then
+          require("snacks").lazygit.open()
+        else
+          vim.notify("Not in a git repository", vim.log.levels.WARN)
+        end
       end,
       desc = "Lazygit",
     },
     {
       "<leader>gL",
       function()
-        require("snacks").lazygit.log()
+        if require("snacks").git.get_root() then
+          require("snacks").lazygit.log()
+        else
+          vim.notify("Not in a git repository", vim.log.levels.WARN)
+        end
       end,
       desc = "Lazygit Log",
     },
     {
       "<leader>gF",
       function()
-        require("snacks").lazygit.log_file()
+        if require("snacks").git.get_root() then
+          require("snacks").lazygit.log_file()
+        else
+          vim.notify("Not in a git repository", vim.log.levels.WARN)
+        end
       end,
       desc = "Lazygit Log File",
     },
     {
       "<leader>gc",
       function()
-        require("snacks").picker.git_log()
+        if require("snacks").git.get_root() then
+          require("snacks").picker.git_log()
+        else
+          vim.notify("Not in a git repository", vim.log.levels.WARN)
+        end
       end,
       desc = "Git Log (Commits)",
     },
     {
       "<leader>gd",
       function()
-        require("snacks").picker.git_diff()
+        if require("snacks").git.get_root() then
+          require("snacks").picker.git_diff()
+        else
+          vim.notify("Not in a git repository", vim.log.levels.WARN)
+        end
       end,
       desc = "Git Diff (Hunks)",
     },
     {
       "<leader>gf",
       function()
-        require("snacks").picker.git_log_file()
+        if require("snacks").git.get_root() then
+          require("snacks").picker.git_log_file()
+        else
+          vim.notify("Not in a git repository", vim.log.levels.WARN)
+        end
       end,
       desc = "Git Log File",
     },
     {
       "<leader>gl",
       function()
-        require("snacks").picker.git_log_line()
+        if require("snacks").git.get_root() then
+          require("snacks").picker.git_log_line()
+        else
+          vim.notify("Not in a git repository", vim.log.levels.WARN)
+        end
       end,
       desc = "Git Log Line",
     },
     {
       "<leader>go",
       function()
-        require("snacks").gitbrowse.open()
+        if require("snacks").git.get_root() then
+          require("snacks").gitbrowse.open()
+        else
+          vim.notify("Not in a git repository", vim.log.levels.WARN)
+        end
       end,
       desc = "Open in Browser",
     },
     {
       "<leader>gs",
       function()
-        require("snacks").picker.git_status()
+        if require("snacks").git.get_root() then
+          require("snacks").picker.git_status()
+        else
+          vim.notify("Not in a git repository", vim.log.levels.WARN)
+        end
       end,
       desc = "Git Status",
     },
     {
       "<leader>gS",
       function()
-        require("snacks").picker.git_stash()
+        if require("snacks").git.get_root() then
+          require("snacks").picker.git_stash()
+        else
+          vim.notify("Not in a git repository", vim.log.levels.WARN)
+        end
       end,
       desc = "Git Stash",
     },
 
-    -- GitHub (moved to <leader>gh prefix for clarity)
+    -- ============================================================================
+    -- GitHub (<leader>gh*)
+    -- ============================================================================
     {
       "<leader>ghi",
       function()
@@ -413,7 +455,9 @@ return {
       desc = "GitHub Pull Requests (all)",
     },
 
-    -- Search
+    -- ============================================================================
+    -- Search (<leader>s*)
+    -- ============================================================================
     {
       "<leader>sb",
       function()
@@ -528,51 +572,62 @@ return {
       desc = "Undo History",
     },
 
-    -- LSP
+    -- ============================================================================
+    -- LSP Picker (<leader>lp* for picker-based LSP)
+    -- ============================================================================
     {
-      "gd",
+      "<leader>lpd",
       function()
         require("snacks").picker.lsp_definitions()
       end,
-      desc = "Goto Definition",
+      desc = "Picker: Definitions",
     },
     {
-      "gD",
+      "<leader>lpD",
       function()
         require("snacks").picker.lsp_declarations()
       end,
-      desc = "Goto Declaration",
+      desc = "Picker: Declarations",
     },
     {
-      "gR",
+      "<leader>lpr",
       function()
         require("snacks").picker.lsp_references()
       end,
-      desc = "References (Picker)",
+      desc = "Picker: References",
     },
     {
-      "gI",
+      "<leader>lpi",
       function()
         require("snacks").picker.lsp_implementations()
       end,
-      desc = "Goto Implementation",
+      desc = "Picker: Implementations",
     },
     {
-      "gy",
+      "<leader>lpt",
       function()
         require("snacks").picker.lsp_type_definitions()
       end,
-      desc = "Goto Type Definition",
+      desc = "Picker: Type Definitions",
     },
     {
-      "<leader>ls",
+      "<leader>lps",
       function()
         require("snacks").picker.lsp_symbols()
       end,
-      desc = "LSP Symbols",
+      desc = "Picker: Document Symbols",
+    },
+    {
+      "<leader>lpS",
+      function()
+        require("snacks").picker.lsp_workspace_symbols()
+      end,
+      desc = "Picker: Workspace Symbols",
     },
 
-    -- Notifications
+    -- ============================================================================
+    -- Notifications (<leader>n*)
+    -- ============================================================================
     {
       "<leader>nd",
       function()
@@ -588,7 +643,9 @@ return {
       desc = "Notification History",
     },
 
-    -- Scratch Buffers
+    -- ============================================================================
+    -- Scratch Buffers (<leader>v*)
+    -- ============================================================================
     {
       "<leader>vt",
       function()
@@ -694,21 +751,17 @@ return {
               ["format"] = {
                 "<leader>j",
                 function(self)
-                  -- Get all buffer content
                   local lines = vim.api.nvim_buf_get_lines(self.buf, 0, -1, false)
                   local content = table.concat(lines, "\n")
 
-                  -- Try to parse and format JSON
                   local ok, decoded = pcall(vim.json.decode, content)
                   if ok then
                     local formatted = vim.fn.json_encode(decoded)
-                    -- Pretty print with jq if available, otherwise use vim's indent
                     local jq_result = vim.fn.system("jq .", formatted)
                     if vim.v.shell_error == 0 then
                       local new_lines = vim.split(jq_result, "\n")
                       vim.api.nvim_buf_set_lines(self.buf, 0, -1, false, new_lines)
                     else
-                      -- Fallback: use vim's json formatting
                       local new_lines = vim.split(formatted, "\n")
                       vim.api.nvim_buf_set_lines(self.buf, 0, -1, false, new_lines)
                       vim.cmd("normal! gg=G")

@@ -5,8 +5,6 @@ return {
   "folke/which-key.nvim",
   event = "VeryLazy",
   opts = {
-    -- your configuration comes here
-    -- or leave it empty to use the default settings
     preset = "modern",
     delay = 300,
     icons = {
@@ -21,76 +19,129 @@ return {
     local wk = require("which-key")
     wk.setup(opts)
 
-    -- Document existing key groups
+    -- Document key groups
     wk.add({
-      -- Top-level quick access
+      -- ============================================================================
+      -- Top-level Shortcuts
+      -- ============================================================================
       { "<leader><space>", desc = "Smart find files" },
       { "<leader>,", desc = "Buffers picker" },
       { "<leader>/", desc = "Grep" },
       { "<leader>:", desc = "Command history" },
 
-      -- File Operations
-      { "<leader>e", desc = "Open file explorer in new tab" },
-      { "<leader>E", desc = "Open file explorer in current window" },
-
-      -- Buffer Management
+      -- ============================================================================
+      -- Buffer Management (<leader>b*)
+      -- ============================================================================
       { "<leader>b", group = "Buffer" },
 
-      -- Code Actions
+      -- ============================================================================
+      -- Code Actions (<leader>c*) - LSP
+      -- ============================================================================
       { "<leader>c", group = "Code" },
-      { "<leader>k", desc = "Signature help" },
 
-      -- Debug
+      -- ============================================================================
+      -- Debug (<leader>d*) - DAP
+      -- ============================================================================
       { "<leader>d", group = "Debug" },
       { "<leader>db", group = "Breakpoints" },
       { "<leader>ds", group = "Step" },
+      { "<leader>dc", group = "Continue/Control" },
+      { "<leader>du", group = "UI" },
+      { "<leader>de", group = "Eval/REPL" },
+      { "<leader>di", group = "Inspect" },
 
-      -- Find/Files
+      -- ============================================================================
+      -- Diagnostics (<leader>d* shared with Debug)
+      -- Diagnostics: dd, dl, dq, [d, ]d
+      -- Debug: db*, ds*, dc*, dt, dr, dp, du*, de*, dh, dw, di*
+      -- ============================================================================
+
+      -- ============================================================================
+      -- File Explorer
+      -- ============================================================================
+      { "<leader>e", desc = "Open file explorer in new tab" },
+      { "<leader>E", desc = "Open file explorer in current window" },
+
+      -- ============================================================================
+      -- Find/Files (<leader>f*)
+      -- ============================================================================
       { "<leader>f", group = "Find/Files" },
 
-      -- Git Operations
+      -- ============================================================================
+      -- Git (<leader>g*)
+      -- ============================================================================
       { "<leader>g", group = "Git" },
       { "<leader>gh", group = "GitHub" },
 
-      -- LSP
+      -- ============================================================================
+      -- LSP (<leader>l*)
+      -- ============================================================================
       { "<leader>l", group = "LSP" },
+      { "<leader>lw", group = "Workspace" },
+      { "<leader>lp", group = "Picker" },
 
-      -- Miscellaneous
-      { "<leader>n", group = "Misc" },
+      -- ============================================================================
+      -- Location List (<leader>l* shared with LSP)
+      -- LSP: lh, ls, lS, li, lo, lwa, lwr, lwl, lp*
+      -- Location: lo, lc, ln, lp (note: conflicts exist)
+      -- ============================================================================
 
-      -- Clipboard
-      { "<leader>p", desc = "Paste from system clipboard" },
+      -- ============================================================================
+      -- Notifications (<leader>n*)
+      -- ============================================================================
+      { "<leader>n", group = "Notifications" },
 
-      -- Quickfix & Location Lists / Quit
-      { "<leader>q", group = "Quickfix/Lists/Quit" },
-      { "<C-q>", desc = "Quit all" },
+      -- ============================================================================
+      -- Quickfix (<leader>q*)
+      -- ============================================================================
+      { "<leader>q", group = "Quickfix" },
 
-      -- Search
+      -- ============================================================================
+      -- Search (<leader>s*)
+      -- ============================================================================
       { "<leader>s", group = "Search" },
 
-      -- Tabs/Tests
-      { "<leader>t", group = "Tabs/Tests" },
-      { "<leader>tm", group = "Tab Move" },
+      -- ============================================================================
+      -- Test (<leader>t*)
+      -- ============================================================================
+      { "<leader>t", group = "Test" },
+      { "<leader>tc", group = "Control" },
+      { "<leader>tw", group = "Watch" },
+      { "<leader>to", group = "Output" },
 
-      -- Scratch Buffers
-      { "<leader>v", group = "Scratch Buffers" },
+      -- ============================================================================
+      -- UI/Toggles (<leader>u*)
+      -- ============================================================================
+      { "<leader>u", group = "UI/Toggles" },
 
-      -- Window/Split Management & Workspace
-      { "<leader>w", group = "Window/Workspace" },
+      -- ============================================================================
+      -- Scratch/Variables (<leader>v*)
+      -- ============================================================================
+      { "<leader>v", group = "Scratch" },
 
-      -- Diagnostics
-      { "<leader>x", group = "Diagnostics" },
+      -- ============================================================================
+      -- Window (<leader>w*)
+      -- ============================================================================
+      { "<leader>w", group = "Window" },
 
-      -- Clipboard
+      -- ============================================================================
+      -- Clipboard/Yank (<leader>y*)
+      -- ============================================================================
       { "<leader>y", desc = "Copy to system clipboard" },
       { "<leader>Y", desc = "Copy line to system clipboard" },
+      { "<leader>p", desc = "Paste from system clipboard" },
+      { "<leader>P", desc = "Paste before from system clipboard" },
 
-      -- Navigation prefixes
+      -- ============================================================================
+      -- Navigation Prefixes
+      -- ============================================================================
       { "[", group = "Previous" },
       { "]", group = "Next" },
       { "g", group = "Goto" },
 
+      -- ============================================================================
       -- Comment Operations
+      -- ============================================================================
       { "gc", group = "Comment" },
       { "gb", group = "Block Comment" },
     })
