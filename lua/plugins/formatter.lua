@@ -8,20 +8,6 @@
 return {
   "stevearc/conform.nvim",
   event = { "BufReadPre", "BufNewFile" },
-  keys = {
-    {
-      "<leader>cf",
-      function()
-        require("conform").format({
-          lsp_fallback = true,
-          async = false,
-          timeout_ms = 1000,
-        })
-      end,
-      mode = { "n", "v" },
-      desc = "Format file or selection",
-    },
-  },
   config = function()
     local conform = require("conform")
 
@@ -39,5 +25,8 @@ return {
         lsp_fallback = true,
       },
     })
+
+    -- Note: Format keymap is defined in lua/config/keymaps.lua as <leader>cf
+    -- under the "Code" category, and also set up in the LspAttach autocmd
   end,
 }

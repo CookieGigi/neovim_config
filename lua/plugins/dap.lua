@@ -12,51 +12,65 @@ return {
     -- Virtual text support for variable values
     "theHamsta/nvim-dap-virtual-text",
   },
-  -- Load DAP when any Rust file is opened or when any key is pressed
+  -- Load DAP when any key is pressed
   event = "VeryLazy",
   keys = {
-    -- F-keys for quick debugging (standard IDE conventions)
+    -- ============================================================================
+    -- F-keys for Quick Debugging (IDE Conventions)
+    -- ============================================================================
     { "<F5>", function() require("dap").continue() end, desc = "Debug: Continue" },
     { "<F9>", function() require("dap").toggle_breakpoint() end, desc = "Debug: Toggle breakpoint" },
     { "<F10>", function() require("dap").step_over() end, desc = "Debug: Step over" },
     { "<F11>", function() require("dap").step_into() end, desc = "Debug: Step into" },
     { "<F12>", function() require("dap").step_out() end, desc = "Debug: Step out" },
 
-    -- Session control
+    -- ============================================================================
+    -- Session Control (<leader>dc*)
+    -- ============================================================================
     { "<leader>dc", function() require("dap").continue() end, desc = "Continue/Start" },
     { "<leader>dC", function() require("dap").run_to_cursor() end, desc = "Run to cursor" },
     { "<leader>dt", function() require("dap").terminate() end, desc = "Terminate" },
     { "<leader>dr", function() require("dap").restart() end, desc = "Restart" },
     { "<leader>dp", function() require("dap").pause() end, desc = "Pause" },
 
-    -- Breakpoints
+    -- ============================================================================
+    -- Breakpoints (<leader>db*)
+    -- ============================================================================
     { "<leader>dbt", function() require("dap").toggle_breakpoint() end, desc = "Toggle breakpoint" },
-    { "<leader>dB", function() require("dap").set_breakpoint(vim.fn.input("Breakpoint condition: ")) end, desc = "Conditional breakpoint" },
-    { "<leader>dL", function() require("dap").set_breakpoint(nil, nil, vim.fn.input("Log point message: ")) end, desc = "Log point" },
-    { "<leader>dbl", function() require("dap").list_breakpoints() end, desc = "List breakpoints" },
+    { "<leader>dbc", function() require("dap").set_breakpoint(vim.fn.input("Breakpoint condition: ")) end, desc = "Conditional breakpoint" },
+    { "<leader>dbl", function() require("dap").set_breakpoint(nil, nil, vim.fn.input("Log point message: ")) end, desc = "Log point" },
+    { "<leader>dbL", function() require("dap").list_breakpoints() end, desc = "List breakpoints" },
     { "<leader>dbx", function() require("dap").clear_breakpoints() end, desc = "Clear all breakpoints" },
 
-    -- Stepping
+    -- ============================================================================
+    -- Stepping (<leader>ds*)
+    -- ============================================================================
     { "<leader>dso", function() require("dap").step_over() end, desc = "Step over" },
     { "<leader>dsi", function() require("dap").step_into() end, desc = "Step into" },
     { "<leader>dsu", function() require("dap").step_out() end, desc = "Step out" },
     { "<leader>dsb", function() require("dap").step_back() end, desc = "Step back" },
     { "<leader>dsr", function() require("dap").restart_frame() end, desc = "Restart frame" },
 
-    -- UI
+    -- ============================================================================
+    -- UI (<leader>du*)
+    -- ============================================================================
     { "<leader>du", function() require("dapui").toggle() end, desc = "Toggle UI" },
     { "<leader>dU", function() require("dapui").open({ reset = true }) end, desc = "Reset UI" },
 
-    -- Evaluation & REPL
+    -- ============================================================================
+    -- Evaluation & REPL (<leader>de*)
+    -- ============================================================================
     { "<leader>de", function() require("dap").repl.toggle() end, desc = "Toggle REPL" },
     { "<leader>dE", function() require("dap").eval() end, desc = "Evaluate expression", mode = { "n", "v" } },
     { "<leader>dh", function() require("dap.ui.widgets").hover() end, desc = "Hover variables" },
     { "<leader>dw", function() require("dap.ui.widgets").preview() end, desc = "Preview variables" },
 
-    -- Inspection
-    { "<leader>di", function() require("dap.ui.widgets").centered_float(require("dap.ui.widgets").scopes) end, desc = "Inspect scopes" },
-    { "<leader>df", function() require("dap.ui.widgets").centered_float(require("dap.ui.widgets").frames) end, desc = "Show frames" },
-    { "<leader>dT", function() require("dap.ui.widgets").centered_float(require("dap.ui.widgets").threads) end, desc = "Show threads" },
+    -- ============================================================================
+    -- Inspection (<leader>di*)
+    -- ============================================================================
+    { "<leader>dis", function() require("dap.ui.widgets").centered_float(require("dap.ui.widgets").scopes) end, desc = "Inspect scopes" },
+    { "<leader>dif", function() require("dap.ui.widgets").centered_float(require("dap.ui.widgets").frames) end, desc = "Show frames" },
+    { "<leader>dit", function() require("dap.ui.widgets").centered_float(require("dap.ui.widgets").threads) end, desc = "Show threads" },
   },
   config = function()
     local dap = require("dap")
@@ -158,8 +172,6 @@ return {
     vim.api.nvim_set_hl(0, "DapStoppedLine", { default = true, link = "Visual" })
 
     -- Load adapter configurations
-    -- This ensures adapters are loaded after nvim-dap is fully initialized
-    -- Only load if the config file exists (worktree-specific adapters)
     local adapters_path = vim.fn.stdpath("config") .. "/lua/config/dap-adapters.lua"
     if vim.fn.filereadable(adapters_path) == 1 then
       require("config.dap-adapters")
