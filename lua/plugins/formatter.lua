@@ -10,6 +10,26 @@ return {
   config = function()
     local conform = require("conform")
 
+    -- Setup organize imports on save for TypeScript/JavaScript
+    vim.api.nvim_create_autocmd("BufWritePre", {
+      pattern = { "*.ts", "*.tsx", "*.js", "*.jsx" },
+      group = vim.api.nvim_create_augroup("OrganizeImports", { clear = true }),
+      callback = function(args)
+        local clients = vim.lsp.get_clients({ bufnr = args.buf, name = "ts_ls" })
+        if #clients == 0 then
+          return
+        end
+
+        vim.lsp.buf.code_action({
+          apply = true,
+          context = {
+            only = { "source.organizeImports" },
+            diagnostics = {},
+          },
+        })
+      end,
+    })
+
     conform.setup({
       formatters_by_ft = {
         lua = { "stylua" },
@@ -23,7 +43,7 @@ return {
       },
       format_on_save = {
         -- Enable format on save (set to false to disable)
-        timeout_ms = 500,
+        timeout_ms = 1000,
         lsp_fallback = true,
       },
     })
