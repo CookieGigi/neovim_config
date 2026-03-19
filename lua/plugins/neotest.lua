@@ -8,40 +8,47 @@ return {
     "nvim-treesitter/nvim-treesitter",
   },
   keys = {
-    -- Test execution
+    -- ============================================================================
+    -- Test Execution (<leader>t*)
+    -- ============================================================================
     { "<leader>tt", function() require("neotest").run.run() end, desc = "Run nearest test" },
     { "<leader>tf", function() require("neotest").run.run(vim.fn.expand("%")) end, desc = "Run current file" },
     { "<leader>ta", function() require("neotest").run.run(vim.fn.getcwd()) end, desc = "Run all tests" },
     { "<leader>tl", function() require("neotest").run.run_last() end, desc = "Run last test" },
     { "<leader>td", function() require("neotest").run.run({ strategy = "dap" }) end, desc = "Debug nearest test" },
 
-    -- Test control
-    { "<leader>ts", function() require("neotest").run.stop() end, desc = "Stop nearest test" },
-    { "<leader>tA", function() require("neotest").run.attach() end, desc = "Attach to nearest test" },
+    -- ============================================================================
+    -- Test Control (<leader>tc*)
+    -- ============================================================================
+    { "<leader>tcs", function() require("neotest").run.stop() end, desc = "Stop nearest test" },
+    { "<leader>tca", function() require("neotest").run.attach() end, desc = "Attach to nearest test" },
 
-    -- Test watching
-    { "<leader>tw", function() require("neotest").watch.toggle() end, desc = "Toggle watch nearest test" },
-    { "<leader>tW", function() require("neotest").watch.toggle(vim.fn.expand("%")) end, desc = "Toggle watch file" },
+    -- ============================================================================
+    -- Test Watching (<leader>tw*)
+    -- ============================================================================
+    { "<leader>twt", function() require("neotest").watch.toggle() end, desc = "Toggle watch nearest test" },
+    { "<leader>twf", function() require("neotest").watch.toggle(vim.fn.expand("%")) end, desc = "Toggle watch file" },
 
-    -- Test output
-    { "<leader>to", function() require("neotest").output.open({ enter = true }) end, desc = "Show test output" },
-    { "<leader>tO", function() require("neotest").output_panel.toggle() end, desc = "Toggle output panel" },
+    -- ============================================================================
+    -- Test Output (<leader>to*)
+    -- ============================================================================
+    { "<leader>too", function() require("neotest").output.open({ enter = true }) end, desc = "Show test output" },
+    { "<leader>top", function() require("neotest").output_panel.toggle() end, desc = "Toggle output panel" },
 
-    -- Test summary
+    -- ============================================================================
+    -- Test Summary (<leader>tS)
+    -- ============================================================================
     { "<leader>tS", function() require("neotest").summary.toggle() end, desc = "Toggle test summary" },
 
-    -- Test navigation
+    -- ============================================================================
+    -- Test Navigation ([t/]t)
+    -- ============================================================================
     { "[t", function() require("neotest").jump.prev({ status = "failed" }) end, desc = "Jump to previous failed test" },
     { "]t", function() require("neotest").jump.next({ status = "failed" }) end, desc = "Jump to next failed test" },
   },
   config = function()
     require("neotest").setup({
       -- Adapters (empty by default - add language-specific adapters in specialized configs)
-      -- Example for specialized configs:
-      -- adapters = {
-      --   require("neotest-python")({ dap = { justMyCode = false } }),
-      --   require("neotest-go")({ args = { "-count=1", "-timeout=60s" } }),
-      -- }
       adapters = {},
 
       -- Discovery
