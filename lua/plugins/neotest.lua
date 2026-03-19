@@ -6,6 +6,7 @@ return {
     "nvim-lua/plenary.nvim",
     "antoinemadec/FixCursorHold.nvim",
     "nvim-treesitter/nvim-treesitter",
+    "marilari88/neotest-vitest",
   },
   keys = {
     -- ============================================================================
@@ -48,8 +49,15 @@ return {
   },
   config = function()
     require("neotest").setup({
-      -- Adapters (empty by default - add language-specific adapters in specialized configs)
-      adapters = {},
+      -- Adapters
+      adapters = {
+        require("neotest-vitest")({
+          -- Filter directories when searching for test files
+          filter_dir = function(name)
+            return name ~= "node_modules" and name ~= "dist" and name ~= "build"
+          end,
+        }),
+      },
 
       -- Discovery
       discovery = {
