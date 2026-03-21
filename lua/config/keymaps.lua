@@ -70,6 +70,13 @@ keymap("n", "<leader>bp", ":bprevious<CR>", { desc = "Previous buffer" })
 keymap("n", "<leader>bD", ":bdelete!<CR>", { desc = "Delete buffer (force)" })
 
 -- ============================================================================
+-- Tab Navigation
+-- ============================================================================
+
+keymap("n", "<Tab>", ":tabnext<CR>", { desc = "Next tab" })
+keymap("n", "<S-Tab>", ":tabprevious<CR>", { desc = "Previous tab" })
+
+-- ============================================================================
 -- Window Management (<leader>w*)
 -- ============================================================================
 
